@@ -6301,9 +6301,8 @@ header {
   text-align: center;
   color: #fff;
   background-color: #919191;
-  background-image: url(../img/header.png), linear-gradient(to bottom, #9e9e9e, #848484);
-  background-position: 50% 100%;
-  background-size: 200%;
+  background-image: url(../img/header.svgz), linear-gradient(to bottom, #929292, #4a90d9);
+  background-position: center top;
   background-repeat: no-repeat; }
 
 header .header-content {
