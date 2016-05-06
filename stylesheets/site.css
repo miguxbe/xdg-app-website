@@ -6198,7 +6198,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Overpass','Source Sans', sans-serif; }
+  font-family: 'Overpass','Source Sans', sans-serif;
+  margin-top: 3em; }
+  h1:first-child,
+  h2:first-child,
+  h3:first-child,
+  h4:first-child,
+  h5:first-child,
+  h6:first-child {
+    margin-top: 0.3em; }
 
 p {
   margin-bottom: 20px;
