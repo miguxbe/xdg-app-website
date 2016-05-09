@@ -178,67 +178,30 @@
     <div class='container'>
       <div class='row'>
         <div class='col-lg-10 col-lg-offset-1'>
-          <h1 class='section-heading text-center'>Developer Information</h1>
-          <hr class='primary'>
+          <h1 class='section-heading text-center'>Building an Application</h1>
           <p>
-            This page is split up into 6 sections:
-          </p>
-          <ol>
-            <li>
-              <a href='#building-basic'>Building a Basic Application</a>
-            </li>
-            <li>
-              <a href='#building-complex'>Building a Complex Application</a>
-            </li>
-            <li>
-              <a href='#automating'>
-                Automating using the
-                <code>xdg-app-builder</code>
-                tool
-              </a>
-            </li>
-            <li>
-              <a href='#sandbox'>The xdg-app Sandbox</a>
-            </li>
-            <li>
-              <a href='#distribute'>How To Distribute a Flatpak</a>
-            </li>
-            <li>
-              <a href='#appdata'>Software Center Metadata</a>
-            </li>
-          </ol>
-          <a name='building-basic'></a>
-          <h2>Building a Basic Application</h2>
-          <p>
-            This tutorial is using xdg-app 0.4.12. Older versions should work too, but minor things may need to be changed in the commands, and not all features may be supported.
+            This tutorial requires xdg-app 0.4.12, which is available on Fedora 23 or
+            newer, or Ubuntu XXX or newer.
           </p>
           <h3>1. Install Flatpak</h3>
           <p>
-            Before you can install applications with Flatpak, you need to install the
-            Flatpak itself. Currently this has to be done using the command line.
+            First we need to install Flatpak itself.
+            Currently this has to be done using the command line.
           </p>
-          <p>
-            With Fedora, run:
-          </p>
+          <p>If you are using Fedora, run:</p>
           <pre>$ sudo dnf install xdg-app</pre>
-          <p>
-            Or on Ubuntu, run:
-          </p>
+          <p>Or if you're on Ubuntu, run:</p>
           <pre>$ sudo apt-get install xdg-app</pre>
-          <h3>2. Add a repository</h3>
-          <p>
-            Flatpak uses remote repositories as the source for software. For this
-            example we're using the GNOME SDK repository, which provides a runtime
-            that we can use to build our app.
-          </p>
-          <pre>$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/</pre>
-          <h3>3. Install the runtime</h3>
+          <h3>2. Install a runtime</h3>
           <p>
             Flatpak requires every app to specify a runtime that it uses for its dependencies.
-            We'll use the GNOME Platform runtime for this. To install it, run:
+            We'll use the GNOME Platform runtime for this. To install the runtime, we first
+            need to add the repository that provides it. To do this, run:
           </p>
+          <pre>$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/</pre>
+          <p>And now install the runtime itself:</p>
           <pre>$ xdg-app --user install gnome org.gnome.Platform 3.20</pre>
-          <h3>4. Create your app</h3>
+          <h3>3. Create your app</h3>
           <p>
             First we need to create the directory structure for the app:
           </p>
@@ -247,37 +210,37 @@
             Now let's add something simple: create a file in
             <code>appdir/files/bin/ called</code>.
             <code>hello.sh</code>:
-            And add the following:
+            Add the following to the file and save it:
           </p>
           <pre>#!/bin/sh&#x000A;echo "Hello world, from a sandbox"</pre>
           <p>
             Then we need to provide some information about the application.
-            In Flatpak this is in specified in a key-value file called "metadata", which goes in
-            <code>appdir</code>.
-            For a simple app like this it doesn't contain much, so we can create it manually:
+            In Flatpak this is specified in a key-value file called "metadata", which goes in
+            the
+            <code>appdir</code>directory.
+            For a simple app this doesn't contain much, so we can create it manually:
           </p>
           <pre>[Application]&#x000A;name=org.test.Hello&#x000A;runtime=org.gnome.Platform/x86_64/master&#x000A;command=hello.sh</pre>
           <p>
             This specifies the application identifier (<em>org.test.Hello</em>) as
             well as the runtime the application uses and the command to start the app with.
           </p>
-          <h3>5. Put the app in a repository</h3>
+          <h3>4. Put the app in a repository</h3>
           <p>
-            In order for xdg-app to be able to install this application we need to put it
-            in a repository.
-            This is done with the build-export command:
+            Congratulations, you have an app! To be able to install it, you need to put it
+            in a repository. This is done with the build-export command:
           </p>
           <pre>  xdg-app build-export repo appdir</pre>
           <p>
             This will initialize a local repository in the "repo" directory and export the app to it.
           </p>
-          <h3>6. Install the app</h3>
+          <h3>5. Install the app</h3>
           <p>
             Now we're ready to add the repository that was just created and install the app.
             This is done with two commands:
           </p>
           <pre>xdg-app --user remote-add --no-gpg-verify tutorial-repo repo&#x000A;xdg-app --user install tutorial-repo org.test.Hello</pre>
-          <h3>7. Run the app</h3>
+          <h3>6. Run the app</h3>
           <p>
             All that's left is to run the app! This can be done with:
           </p>
@@ -287,132 +250,11 @@
             <em>Hello world, from a sandbox</em>,
           </p>
           <p>
-            For a more detailed information on how to flatpak a more complex application,
+            Ta da!
+          </p>
+          <p>
+            For a more detailed information on how to Flatpak a more complex application,
             <a href="developer.html">see here.</a>
-          </p>
-          <a name='distribute'></a>
-          <h2>How To Distribute a Flatpak</h2>
-          <p>
-            Now we will look into how this application can be distributed to your users.
-            <a href='https://ostree.readthedocs.org/en/latest/'>OSTree.</a>
-          </p>
-          <p>
-            First we need to talk a bit about
-            <a href='https://ostree.readthedocs.org/en/latest/'>OSTree.</a>
-            This is the core distribution and installation mechanism of xdg-app.
-            OSTree is similar to git, but has been designed to handle trees of large binaries.
-            Just like git it has the concept of repositories, commits and branches (refs) .
-            Branches are names which points to a commit id, and an application stored in
-            a repository is such a branch.
-          </p>
-          <p>
-            On your machine there is a local OSTree repository which has a bunch of "remotes" configured.
-            When you install or update an application from one on these remotes, what
-            happens is that we
-            <code>ostree pull</code>
-            the branch from the remote,
-            then do a local checkout of the branch (with hard links back to the repository
-            files, so this is cheap).
-          </p>
-          <p>
-            The OSTree repositories created by
-            <code>xdg-app build-export</code>
-            are of a
-            type (called
-            <em>archive-z2</em>)
-          </p>
-          <p>
-            There are however some extra details you have to be aware off:
-          </p>
-          <p>
-            First of all, the format of the
-            <em>archive-z2</em>repositories
-            <a href='https://en.wikipedia.org/wiki/HTTP_persistent_connection'>HTTP keep-alive</a>
-            in your webserver.
-          </p>
-          <p>
-            OSTree also supports something called
-            <em>static deltas</em>.
-          </p>
-          <p>
-            xdg-app has the
-            <code>build-update-repo</code>
-            command that is very useful to manage repositories.
-            Starting at version 0.4.13 it supports
-            <code>--generate-static-deltas</code>
-            to generate the deltas.
-            but it also has several other features that are useful.
-            For instance, you can use:
-          </p>
-          <pre>xdg-app build-update-repo --title="Nice name" repo</pre>
-          <p>
-            To set a user readable name for the repository, which will be used by default #
-            in the UI when users see this repository.
-          </p>
-          <p>
-            It also lets you prune (<code>--prune</code>) unused objects and deltas from the
-            repository, and even remove older revisions from your repository (<code>--prune-depth</code>)
-            which is useful for things like automatic nightly build repositories.
-          </p>
-          <p>
-            Another thing
-            <code>build-update-repo</code>
-            does is appstream extraction.
-            It scans all the branches in the repository and looks for an
-            <a href='https://www.freedesktop.org/wiki/Distributions/AppStream/'>AppStream</a>
-            xml file.
-            For instance, the dictionary app from
-            <a href='https://blogs.gnome.org/alexl/2016/02/22/building-an-xdg-app-part-3/'>part 3</a>contains
-            <code>files/share/app-info/xmls/org.gnome.Dictionary.xml.gz</code>.
-          </p>
-          <pre>xdg-app --user update --appstream nightly</pre>
-          <p>
-            This is used by graphical installation tools such as
-            <a href='https://blogs.gnome.org/alexl/2016/02/11/testing-unstable-gnome-using-xdg-app/'>gnome-software</a>,
-          </p>
-          <p>
-            <em>
-              Note: xdg-app-builder automatically runs the appstream-compose command after the build.
-              This will collect information from appdata files and desktop files and create the right xml.gz and icon files.
-              This is where the xml in gnome-dictionary came from.
-            </em>
-          </p>
-          <p>
-            Another important part about app distribution is gpg signatures.
-            By default OSTree refuses to pull anything from a remote repository that is not signed.
-            This is only allowed if you use
-            <code>--no-gpg-verify</code>
-            when you add the remote (or you can change it with
-            <code>xdg-app remote-modify</code>).
-          </p>
-          <p>
-            In OSTree, signatures are on each commit and on the summary file that lists all
-            the branches in the repositories.
-            These objects are created by the
-            <code>build-update-repo</code>,
-            <code>build-export</code>
-            commands, as well as indirectly by
-            <code>xdg-app-builder</code>.
-          </p>
-          <pre>xdg-app build-export --gpg-sign=KEYID --gpg-homedir=/some/dir appdir repo</pre>
-          <a name='appdata'></a>
-          <h2>Software Center Metadata</h2>
-          <p>
-            <a href='appdata.html'>AppData</a>
-            is an additional XML file shipped by upstream
-            projects to provide metadata for a software center.
-            Without an AppData file the application will not be visible in
-            software center applications like GNOME Software.
-          </p>
-          <p>
-            The
-            <a href='oars.html'>Open Age Ratings Specification</a>
-            allows free and
-            commercial software to generate the OARS markup required in the AppData file.
-            OARS relies on honest answers from upstream projects and is purely
-            informational.
-            The OARS markup allows the end user to choose software based on some
-            common criteria in the software center.
           </p>
         </div>
       </div>
