@@ -38,7 +38,7 @@
               <a class='page-scroll' href='#developers'>Developers</a>
             </li>
             <li>
-              <a class='page-scroll' href='#contributions'>Contributions</a>
+              <a class='page-scroll' href='#get-involved'>Get Involved</a>
             </li>
           </ul>
         </div>
@@ -178,46 +178,52 @@
     <div class='container'>
       <div class='row'>
         <div class='col-lg-10 col-lg-offset-1'>
-          <h1 class='section-heading text-center'>Building an Application</h1>
+          <h1 class='section-heading text-center'></h1>
+          <hr class='primary'>
+          <p>
+            Developers can quickly get started using the tutorial below. Otherwise,
+            see the more detailed
+            <a href="developer.html">developers page.</a>
+          </p>
+          <h2>Building an Application</h2>
           <p>
             This tutorial requires xdg-app 0.4.12, which is available on Fedora 23 or
             newer, or Ubuntu XXX or newer.
           </p>
           <h3>1. Install Flatpak</h3>
           <p>
-            First we need to install Flatpak itself.
-            Currently this has to be done using the command line.
+            First we need to install Flatpak itself. If you are using Fedora, run:
           </p>
-          <p>If you are using Fedora, run:</p>
           <pre>$ sudo dnf install xdg-app</pre>
           <p>Or if you're on Ubuntu, run:</p>
           <pre>$ sudo apt-get install xdg-app</pre>
           <h3>2. Install a runtime</h3>
           <p>
             Flatpak requires every app to specify a runtime that it uses for its dependencies.
-            We'll use the GNOME Platform runtime for this. To install the runtime, we first
-            need to add the repository that provides it. To do this, run:
+            We'll use the GNOME Developer Platform runtime for this. To install the runtime,
+            we first need to add the repository that provides it. To do this, run:
           </p>
           <pre>$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/</pre>
-          <p>And now install the runtime itself:</p>
+          <p>And then install the runtime itself:</p>
           <pre>$ xdg-app --user install gnome org.gnome.Platform 3.20</pre>
           <h3>3. Create your app</h3>
           <p>
             First we need to create the directory structure for the app:
           </p>
-          <pre>mkdir appdir&#x000A;mkdir appdir/files&#x000A;mkdir appdir/files/bin&#x000A;mkdir appdir/export</pre>
+          <pre>mkdir hello&#x000A;mkdir hello/files&#x000A;mkdir hello/files/bin&#x000A;mkdir hello/export</pre>
           <p>
             Now let's add something simple: create a file in
-            <code>appdir/files/bin/ called</code>.
-            <code>hello.sh</code>:
-            Add the following to the file and save it:
+            <code>hello/files/bin/</code>
+            called
+            <code>hello.sh</code>.
+            Then add the following to the file and save it:
           </p>
           <pre>#!/bin/sh&#x000A;echo "Hello world, from a sandbox"</pre>
           <p>
-            Then we need to provide some information about the application.
+            Now we need to provide some information about the application.
             In Flatpak this is specified in a key-value file called "metadata", which goes in
             the
-            <code>appdir</code>directory.
+            <code>hello</code>directory.
             For a simple app this doesn't contain much, so we can create it manually:
           </p>
           <pre>[Application]&#x000A;name=org.test.Hello&#x000A;runtime=org.gnome.Platform/x86_64/master&#x000A;command=hello.sh</pre>
@@ -227,34 +233,33 @@
           </p>
           <h3>4. Put the app in a repository</h3>
           <p>
-            Congratulations, you have an app! To be able to install it, you need to put it
+            Congratulations, you've made an app! To be able to install it, you need to put it
             in a repository. This is done with the build-export command:
           </p>
-          <pre>  xdg-app build-export repo appdir</pre>
+          <pre>  xdg-app build-export repo hello</pre>
           <p>
             This will initialize a local repository in the "repo" directory and export the app to it.
           </p>
-          <h3>5. Install the app</h3>
+          <h3>5. Install</h3>
           <p>
             Now we're ready to add the repository that was just created and install the app.
             This is done with two commands:
           </p>
           <pre>xdg-app --user remote-add --no-gpg-verify tutorial-repo repo&#x000A;xdg-app --user install tutorial-repo org.test.Hello</pre>
-          <h3>6. Run the app</h3>
+          <h3>6. Run</h3>
           <p>
-            All that's left is to run the app! This can be done with:
+            All that's left is to run the app. This can be done with:
           </p>
           <pre>xdg-app run org.test.Hello</pre>
           <p>
             This will print
-            <em>Hello world, from a sandbox</em>,
+            <em>Hello world, from a sandbox</em>.
           </p>
           <p>
-            Ta da!
-          </p>
-          <p>
-            For a more detailed information on how to Flatpak a more complex application,
-            <a href="developer.html">see here.</a>
+            Ta da! That's it: you've successfully built, installed and run your first
+            Flatpak. For a more detailed information about how to Flatpak a more complex
+            application,
+            <a href="developer.html">see the developers page.</a>
           </p>
         </div>
       </div>
@@ -267,19 +272,23 @@
       </div>
     </div>
   </aside>
-  <section id='contributions'>
+  <section id='get-involved'>
     <div class='container'>
       <div class='row'>
         <div class='col-lg-10 col-lg-offset-1'>
-          <h1 class='section-heading text-center'>Contributions</h1>
+          <h1 class='section-heading text-center'>Get Involved</h1>
           <hr class='primary'>
           <p>
-            Flatpak is a project made up of contributions from hundreds of users.
-            For more information there is a
-            <a href='http://lists.freedesktop.org/mailman/listinfo/xdg-app'>mailing list</a>.
-            <a href='https://bugs.freedesktop.org/enter_bug.cgi?product=xdg-app'>bugzilla</a>.
+            Flatpak is Free Software and is developed in the open, as a part of the Freedesktop
+            project. To get in touch, use the
+            <a href='http://lists.freedesktop.org/mailman/listinfo/xdg-app'>xdg-app mailing list</a>
+            or
+            <em>xdg-app</em>
+            IRC channel on Freenode. Code can be found on
+            <a href='https://github.com/alexlarsson/xdg-app'>Github</a>
+            and issues are tracked on
+            <a href='https://bugs.freedesktop.org/enter_bug.cgi?product=xdg-app'>Freedesktop Bugzilla</a>.
           </p>
-          <pre>git clone https://github.com/alexlarsson/xdg-app.git&#x000A;</pre>
           <h2>Releases</h2>
           <p>
             See
