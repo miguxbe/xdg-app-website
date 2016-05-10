@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flatpak</title>
+    <meta content='text/html; charset=UTF8' http-equiv='content-type'>
+    <meta content='fixme' name='description'>
+    <meta content='fixme' name='keywords'>
+    <meta content='width=device-width,initial-scale=1' name='viewport'>
+    <link href='/images/icons/favicon.png' rel='icon' type='image/png'>
+    <link href='/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+    <link href="stylesheets/site.css" rel="stylesheet" />
+    <link href="/stylesheets/_animate.css" rel="stylesheet" />
+    <link href="http://overpass-30e2.kxcdn.com/overpass.css" rel="stylesheet" />
+  </head>
+  <body id='page-top'>
+    <nav class='navbar navbar-default navbar-fixed-top' id='mainNav'>
+      <div class='container-fluid'>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class='navbar-header'>
+          <button class='navbar-toggle collapsed' data-target='#bs-example-navbar-collapse-1' data-toggle='collapse' type='button'>
+            <span class='sr-only'>Toggle navigation</span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand page-scroll' href='index.html'>Flatpak</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+          <ul class='nav navbar-nav navbar-right'>
+            <li>
+              <a class='page-scroll' href='index.html#about'>About</a>
+            </li>
+            <li>
+              <a class='page-scroll' href='index.html#users'>Users</a>
+            </li>
+            <li>
+              <a class='page-scroll' href='index.html#developers'>Developers</a>
+            </li>
+            <li>
+              <a class='page-scroll' href='index.html#get-involved'>Get Involed</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </body>
+  <section class=""><div class="container"><div class="row"><div class="col-lg-12">
+  <p>In order to run xdg-app applications you need to have a runtime for it. This page lists the runtimes maintained by the Gnome project.</p>
+  
+  <h1>Stable runtimes</h1>
+  
+  <p>Every major Gnome release comes with stable runtimes that contains the main gnome platform libraries. The runtimes are based on the official freedesktop.org runtimes (of a fixed version that was current when the gnome version was released). They will get minor bugfix and security updates, but should be considered ABI stable and frozen.</p>
+  
+  <p>The repository also contains a build of the freedesktop.org runtimes that the gnome builds are based on. There is currently no other public build of these, so the gnome repository can be considered the official build.</p>
+  
+  <h2>Repo</h2>
+  
+  <p>The repository is available at: <a href="http://sdk.gnome.org/repo/">http://sdk.gnome.org/repo/</a> All releases are manually signed with this key: <a href="https://sdk.gnome.org/keys/gnome-sdk.gpg">https://sdk.gnome.org/keys/gnome-sdk.gpg</a></p>
+  
+  <p>You can add this repository to your local homedirectory with this command:</p>
+  
+  <pre><code>xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/&#x000A;</code></pre>
+  
+  <p>This repository contains these runtimes:</p>
+  
+  <table class="full"><!-- fixme make into markdown tables -->
+    <tr>
+      <th>Name</th><th>Description</th><th class="nowrap">Versions</th>
+    </tr>
+    <tr>
+      <td>org.gnome.Platform</td>
+      <td>The standard Gnome runtime used by most gnome apps</td>
+      <td>3.16, 3.18, 3.20</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Platform.Locale</td>
+      <td>Addins to org.gnome.Platform that adds locale data and translations</td>
+      <td>3.20</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Sdk</td>
+      <td></td>
+      <td>3.20</td>
+    </tr>
+    <tr>
+      <td>org.</td>
+      <td>The development runtime used to build apps, and required by apps like gnome-builder</td>
+      <td>3.16, 3.18, 3.20</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Sdk.Debug</td>
+      <td>Debug info addin for org.gnome.Sdk</td>
+      <td>3.20</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Platform</td>
+      <td>Smaller runtime with basic platform including X11, wayland, mesa, dbus, SDL, etc. Used as a base for org.gnome.Platform and other runtimes.</td>
+      <td>1.0, 1.2, 1.4</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Platform.Locale</td>
+      <td>Addins to org.gnome.Platform that adds locale data and translations</td>
+      <td>1.4</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk</td>
+      <td>The development runtime used by org.freedesktop.Platform</td>
+      <td>1.0, 1.2, 1.4</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk.Locale</td>
+      <td>Locale addins for org.freedesktop.Sdk</td>
+      <td>1.0, 1.2, 1.4</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk.Debug</td>
+      <td>Debug info Addin for org.freedesktop.Sdk</td>
+      <td>1.4</td>
+    </tr>
+  </table>
+  
+  <p>For example, you can install the standard runtime for Gnome 3.20 with:</p>
+  
+  <pre><code>xdg-app --user install gnome org.gnome.Platform 3.20&#x000A;</code></pre>
+  
+  <p>Additionally there is a repo with stable builds of some gnome applications, which you can list with:</p>
+  
+  <pre><code>xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps http://sdk.gnome.org/repo-apps/&#x000A;xdg-app --user remote-ls gnome-apps --app&#x000A;</code></pre>
+  
+  <p>All these apps are using a version name of &quot;stable&quot;, and will be updated to the latest stable whenever there is a new gnome release. To install e.e. gedit you would run:</p>
+  
+  <pre><code>xdg-app --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
+  
+  <p>and to update it:</p>
+  
+  <pre><code>xdg-app --user update org.gnome.gedit stable&#x000A;</code></pre>
+  
+  <h1>Nightly build runtimes</h1>
+  
+  <p>There are regular (nightly builds) of the latest gnome and freedesktop runtimes from git. These are not stable and have no guarantees on ABI stability or if they even work. However they are a useful way to test the latest version of gnome that is in development.</p>
+  
+  <p>Additionally, the same repository contains a few applications built against this runtime allowing you to test it.</p>
+  
+  <h2>Repo</h2>
+  
+  <p>The repository is available at: http://sdk.gnome.org/nightly/repo/ All releases are manually signed with this key: https://sdk.gnome.org/nightly/keys/nightly.gpg</p>
+  
+  <p>You can add this repository to your local home directory with this command:</p>
+  
+  <pre><code>xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly http://sdk.gnome.org/nightly/repo/&#x000A;</code></pre>
+  
+  <p>This repository contains these runtimes:</p>
+  
+  <table class="full"><!-- fixme make into markdown tables -->
+    <tr>
+      <th>Name</th><th>Description</th><th class="nowrap">Versions</th>
+    </tr>
+    <tr>
+      <td>org.gnome.Platform</td>
+      <td> The unstable Gnome runtime</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Platform.Locale</td>
+      <td>Addins to org.gnome.Platform that adds locale data and translations</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Sdk</td>
+      <td>The development runtime used to build apps, and required by apps like gnome-builder </td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Sdk.Locale</td>
+      <td>Locale addins for org.gnome.Sdk</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.gnome.Sdk.Debug</td>
+      <td>Debug info addin for org.gnome.Sdk</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Platform</td>
+      <td>Smaller runtime with basic platform including X11, wayland, mesa, dbus, SDL, etc. Used as a base for org.gnome.Platform and other runtimes.</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Platform.Locale</td>
+      <td>Addins to org.gnome.Platform that adds locale data and translations</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk</td>
+      <td>The development runtime used by org.freedesktop.Platform</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk.Locale</td>
+      <td>Locale addins for org.freedesktop.Sdk</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.Sdk.Debug</td>
+      <td>Debug info Addin for org.freedesktop.Sdk</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.BasePlatform</td>
+      <td>Yocto based core for org.freedesktop.Platform</td>
+      <td>master</td>
+    </tr>
+    <tr>
+      <td>org.freedesktop.BaseSdk</td>
+      <td>Yocto based core for org.freedesktop.Sdk</td>
+      <td>master</td>
+    </tr>
+  </table>
+  
+  <p>Additionally there is a repo with nightly builds of some gnome applications, which you can list with:</p>
+  
+  <pre><code>xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly-apps http://sdk.gnome.org/nightly/repo-apps/&#x000A;xdg-app --user remote-ls gnome-nightly-apps --app&#x000A;</code></pre>
+  
+  <p>The current list is:</p>
+  
+  <pre><code>org.gnome.Builder&#x000A;org.gnome.Calculator&#x000A;org.gnome.Calendar&#x000A;org.gnome.Characters&#x000A;org.gnome.Dictionary&#x000A;org.gnome.Documents&#x000A;org.gnome.Epiphany&#x000A;org.gnome.Evince&#x000A;org.gnome.Games&#x000A;org.gnome.Maps&#x000A;org.gnome.News&#x000A;org.gnome.Polari&#x000A;org.gnome.Software.XdgApp&#x000A;org.gnome.Todo&#x000A;org.gnome.Weather&#x000A;org.gnome.bijiben&#x000A;org.gnome.clocks&#x000A;org.gnome.eog&#x000A;org.gnome.gedit&#x000A;org.gnome.iagno&#x000A;</code></pre>
+  
+  <p>Of particular interest is org.gnome.Software.XdgApp, which lets you browse and install xdg-app with a graphical tool.</p>
+  
+  <p>All these apps are using a version name of &quot;master&quot;. To install e.e. gedit you would run:</p>
+  
+  <pre><code>xdg-app --user install gnome-nightly-apps org.gnome.gedit master&#x000A;</code></pre>
+  
+  <p>and to update it:</p>
+  
+  <pre><code>xdg-app --user update org.gnome.gedit master&#x000A;</code></pre>
+  </div></div></div></section>
+  <script src="javascripts/jquery.js"></script>
+  <script src="javascripts/jquery.easing.min.js"></script>
+  <script src="javascripts/all.js"></script>
+  <script src="javascripts/bootstrap.js"></script>
+</html>
+<script>
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-68811788-1']);
+  _gaq.push(['_trackPageview']);
+  
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
