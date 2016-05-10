@@ -136,9 +136,13 @@
           </p>
           <pre>$ sudo dnf install xdg-app</pre>
           <p>
-            Or on Ubuntu, run:
+            On Ubuntu, xdg-app is available through a PPA. To install it, run:
           </p>
-          <pre>$ sudo apt-get install xdg-app</pre>
+          <pre>$ sudo add-apt-repository ppa:alexlarsson/xdg-app&#x000A;$ sudo apt-get update&#x000A;$ sudo apt-get install xdg-app</pre>
+          <p>
+            Details on how to install xdg-app on other distros
+            <a href='https://wiki.gnome.org/Projects/SandboxedApps/Packages'>are available</a>.
+          </p>
           <h3>2. Add some repositories</h3>
           <p>
             Flatpak uses remote repositories as the source for software. For this
@@ -146,7 +150,7 @@
             and one which contains the runtime that provides the dependencies
             they need.
           </p>
-          <pre>$ curl -O https://sdk.gnome.org/nightly/keys/nightly.gpg&#x000A;$ xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly http://sdk.gnome.org/nightly/repo/</pre>
+          <pre>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/&#x000A;$ xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps https://sdk.gnome.org/repo-apps/</pre>
           <h3>3. Install the runtime</h3>
           <p>
             The runtime provides the dependencies needed by the apps in the GNOME
@@ -159,7 +163,7 @@
           </p>
           <pre>$ xdg-app --user remote-ls gnome-apps --app</pre>
           <p>
-            To install:
+            To download and install an app, like gedit, run:
           </p>
           <pre>$ xdg-app --user install gnome-apps org.gnome.gedit stable</pre>
           <p>
@@ -193,15 +197,21 @@
             First we need to install Flatpak itself. If you are using Fedora, run:
           </p>
           <pre>$ sudo dnf install xdg-app</pre>
-          <p>Or if you're on Ubuntu, run:</p>
-          <pre>$ sudo apt-get install xdg-app</pre>
+          <p>
+            On Ubuntu, xdg-app is available through a PPA. To install it, run:
+          </p>
+          <pre>$ sudo add-apt-repository ppa:alexlarsson/xdg-app&#x000A;$ sudo apt-get update&#x000A;$ sudo apt-get install xdg-app</pre>
+          <p>
+            Details on how to install xdg-app on other distros
+            <a href='https://wiki.gnome.org/Projects/SandboxedApps/Packages'>are available</a>.
+          </p>
           <h3>2. Install a runtime</h3>
           <p>
             Flatpak requires every app to specify a runtime that it uses for its dependencies.
-            We'll use the GNOME Developer Platform runtime for this. To install the runtime,
+            We'll use the GNOME 3.20 development platform runtime for this. To install the runtime,
             we first need to add the repository that provides it. To do this, run:
           </p>
-          <pre>$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/</pre>
+          <pre>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/</pre>
           <p>And then install the runtime itself:</p>
           <pre>$ xdg-app --user install gnome org.gnome.Platform 3.20</pre>
           <h3>3. Create your app</h3>
@@ -224,7 +234,7 @@
             <code>hello</code>directory.
             For a simple app this doesn't contain much, so we can create it manually:
           </p>
-          <pre>[Application]&#x000A;name=org.test.Hello&#x000A;runtime=org.gnome.Platform/x86_64/master&#x000A;command=hello.sh</pre>
+          <pre>[Application]&#x000A;name=org.test.Hello&#x000A;runtime=org.gnome.Platform/x86_64/3.20&#x000A;command=hello.sh</pre>
           <p>
             This specifies the application identifier (<em>org.test.Hello</em>) as
             well as the runtime the application uses and the command to start the app with.
