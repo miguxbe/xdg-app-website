@@ -6172,7 +6172,8 @@ body {
   height: 100%; }
 
 body {
-  font-family: Overpass,'Source Sans', sans-serif; }
+  font-family: Overpass,'Source Sans', sans-serif;
+  font-size: 11pt; }
 
 hr {
   max-width: 50px;
