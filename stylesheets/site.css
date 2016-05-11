@@ -6237,6 +6237,8 @@ p {
 
 .bg-primary {
   background-color: #4a90d9; }
+  .bg-primary h3 {
+    color: rgba(255, 255, 255, 0.5); }
 
 .bg-dark {
   color: #000;
