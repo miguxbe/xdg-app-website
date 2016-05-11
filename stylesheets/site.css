@@ -6230,6 +6230,11 @@ h3 {
   font-weight: 800;
   color: #919191; }
 
+h4 {
+  font-size: 120%;
+  font-weight: 600;
+  color: #919191; }
+
 p {
   margin-bottom: 20px;
   font-size: 16px;
