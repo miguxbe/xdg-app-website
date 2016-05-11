@@ -6203,7 +6203,7 @@ h4,
 h5,
 h6 {
   font-family: 'Overpass','Source Sans', sans-serif;
-  margin-top: 3em; }
+  margin-top: 2em; }
   h1:first-child,
   h2:first-child,
   h3:first-child,
@@ -6218,6 +6218,15 @@ h6 {
   h5.voffset,
   h6.voffset {
     margin-top: 3em; }
+
+h1 {
+  font-size: 200%; }
+
+h2 {
+  font-size: 180%; }
+
+h3 {
+  font-size: 160%; }
 
 p {
   margin-bottom: 20px;
