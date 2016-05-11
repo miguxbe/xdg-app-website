@@ -6173,7 +6173,7 @@ body {
 
 body {
   font-family: Overpass,'Source Sans', sans-serif;
-  font-size: 11pt; }
+  font-size: 10pt; }
 
 hr {
   max-width: 50px;
@@ -6188,6 +6188,9 @@ a {
   -webkit-transition: all .35s;
   -moz-transition: all .35s;
   transition: all .35s; }
+
+ul {
+  font-size: 12pt; }
 
 a:hover,
 a:focus {

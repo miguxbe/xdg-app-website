@@ -93,16 +93,13 @@
   <ul>
   <li>The files that make up the app</li>
   <li>A metadata file that specifies the runtime required by the app</li>
-  <li><p>Exported files which the host environment needs access to, such as the application&#39;s desktop file, icon and D-Bus service file</p>
-  
-  <p>metadata    # A keyfile which provides information about the application, 
-              # including information that is necessary for setting up the sandbox 
-              # for running the application
-  /files      # The files that make up the application
-  /files/bin  # Application binaries
-  /export     # Files which the host environment needs access to, such as the 
-              # application&#39;s desktop file, icon and D-Bus service file</p></li>
+  <li>Exported files which the host environment needs access to, 
+  such as the application&#39;s desktop file, icon and D-Bus service file</li>
   </ul>
+  
+  <p>&nbsp;</p>
+  
+  <pre><code>metadata    # A keyfile which provides information about the application, &#x000A;            # including information that is necessary for setting up the sandbox &#x000A;            # for running the application&#x000A;/files      # The files that make up the application&#x000A;/files/bin  # Application binaries&#x000A;/export     # Files which the host environment needs access to, such as the &#x000A;            # application&#39;s desktop file, icon and D-Bus service file&#x000A;</code></pre>
   
   <p>A typical metadata file looks like this:</p>
   
