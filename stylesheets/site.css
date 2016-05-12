@@ -6173,7 +6173,7 @@ body {
 
 body {
   font-family: Overpass,'Source Sans', sans-serif;
-  font-size: 10pt; }
+  font-size: 16px; }
 
 hr {
   max-width: 50px;
@@ -6236,8 +6236,7 @@ h4 {
   color: #919191; }
 
 p {
-  margin-bottom: 20px;
-  font-size: 16px;
+  margin-bottom: 1.5em;
   line-height: 1.5; }
 
 .bg-primary {
