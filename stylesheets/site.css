@@ -6174,7 +6174,8 @@ body {
 body {
   font-family: Overpass,'Source Sans', sans-serif;
   font-size: 12pt;
-  font-weight: 300; }
+  font-weight: 300;
+  font-style: normal; }
 
 hr {
   max-width: 50px;
