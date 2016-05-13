@@ -51,9 +51,9 @@
   <section class="bg-dark"><div class="container"><div class="row"><div class="col-lg-10 col-lg-offset-1">
   <h1>Getting Started with XDG-App</h1>
   
-  <p>This guide tells you everything you need to know to build and distribute applications using xdg-app. It includes an introduction to basic concepts, a simple beginner&#39;s example, before providing an overview of more advanced topics such as automated building and repository hosting.</p>
+  <p>This guide contains everything you need to know to build and distribute applications using xdg-app. It includes an introduction to the basic concepts and a simple app building tutorial, before moving on to cover automated building and repository hosting.</p>
   
-  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have xdg-app and xdg-app builder installed on your system. See <a href="getting.html">getting xdg-app</a> for more details on this.</p>
+  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have xdg-app and xdg-app-builder installed on your system. See <a href="getting.html">getting xdg-app</a> for more details on this.</p>
   
   <h2>Key Concepts</h2>
   
@@ -61,21 +61,21 @@
   
   <h3>Runtimes</h3>
   
-  <p>Runtimes provide the environment that each application runs in, including the basic dependencies it might require. Each runtime can be thought of as a <code>/usr</code> filesystem (indeed, when an app is run, its runtime is mounted at <code>/usr</code>). Various runtimes are available, from more minimal (but more stable) Freedesktop runtimes, to larger runtimes produced by desktops like GNOME or KDE.</p>
+  <p>Runtimes provide the environment that each application runs in, including the basic dependencies they might require. Each runtime can be thought of as a <code>/usr</code> filesystem (indeed, when an app is run, its runtime is mounted at <code>/usr</code>). Various runtimes are available, from more minimal (but more stable) Freedesktop runtimes, to larger runtimes produced by desktops like GNOME or KDE. (The <a href="runtimes.html">runtimes page</a> provides an overview of the runtimes that are currently available.)</p>
   
-  <p>Each application must be built against a runtime and this runtime must be present on the host system in order for the application to be run. Users can install multiple different runtimes at the same time, including different versions of the same runtime.</p>
+  <p>Each application must be built against a runtime, and this runtime must be installed on a host system in order for the application to run. Users can install multiple different runtimes at the same time, including different versions of the same runtime.</p>
+  
+  <p>xdg-app identifies runtimes (as well as SDKs and applications) by a triple of name/arch/branch. The name is expected to be in inverse-dns notation, which needs to match the D-Bus name used for the application. For example: &#39;<code>org.gnome.Sdk/x86_64/3.14</code>&#39; or &#39;<code>org.gnome.Builder/i686/master</code>&#39;.</p>
   
   <h3>Application bundles</h3>
   
-  <p>If an application requires any dependencies that aren&#39;t in its runtime, they can be bundled along with the application itself. This allows using dependencies that aren&#39;t available in a distribution, or using a different version of the dependency from one that&#39;s installed on the host.</p>
+  <p>If an application requires any dependencies that aren&#39;t in its runtime, they can be bundled along with the application itself. This allows apps to use dependencies that aren&#39;t available in a distribution, or to use a different version of a dependency from the one that&#39;s installed on the host.</p>
   
   <p>Both runtimes and app bundles can be installed per-user and system-wide.</p>
   
   <h3>SDKs (Software Developer Kits)</h3>
   
-  <p>An &#39;SDK&#39; is a runtime that includes the &#39;devel&#39; parts which are not needed at runtime, such as build and packaging tools, header files, compilers and debuggers. Each application is built against an SDK, which is typically paired with a single runtime (this is the runtime that will be used by the application at runtime).</p>
-  
-  <p>xdg-app identifies runtimes (as well as SDKs and applications) by a triple of name/arch/branch. The name is expected to be in inverse-dns notation, which needs to match the D-Bus name used for the application. For example: &#39;<code>org.gnome.Sdk/x86_64/3.14</code>&#39; or &#39;<code>org.gnome.Builder/i686/master</code>&#39;.</p>
+  <p>An SDK is a runtime that includes the &#39;devel&#39; parts which are not needed at runtime, such as build and packaging tools, header files, compilers and debuggers. Each application is built against an SDK, which is typically paired with a runtime (this is the runtime that will be used by the application at runtime).</p>
   
   <h3>Sandboxes</h3>
   
@@ -83,22 +83,11 @@
   
   <h2>The xdg-app command</h2>
   
-  <p>xdg-app is the tool that is used install, remove and update runtimes and applications. It can also be used to view what is currently installed, and has commands for building and distributing application bundles. <code>xdg-app --help</code> provides a full list of available commands.</p>
+  <p><code>xdg-app</code> is the tool that is used install, remove and update runtimes and applications. It can also be used to view what is currently installed, and has commands for building and distributing application bundles. <code>xdg-app --help</code> provides a full list of available commands.</p>
   
   <h2>Anatomy of an xdg-app</h2>
   
   <p>Each xdg-app has the following basic structure:</p>
-  
-  <p>Each application also includes:</p>
-  
-  <ul>
-  <li>The files that make up the app</li>
-  <li>A metadata file that specifies the runtime required by the app</li>
-  <li>Exported files which the host environment needs access to, 
-  such as the application&#39;s desktop file, icon and D-Bus service file</li>
-  </ul>
-  
-  <p>&nbsp;</p>
   
   <pre><code>metadata    # A keyfile which provides information about the application, &#x000A;            # including information that is necessary for setting up the sandbox &#x000A;            # for running the application&#x000A;/files      # The files that make up the application&#x000A;/files/bin  # Application binaries&#x000A;/export     # Files which the host environment needs access to, such as the &#x000A;            # application&#39;s desktop file, icon and D-Bus service file&#x000A;</code></pre>
   
@@ -116,13 +105,13 @@
   
   <h2>Building a simple app using xdg-app</h2>
   
-  <p>xdg-app provides a simple set of tools for building and distributing applications. These allow creating new apps, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
+  <p><code>xdg-app</code> provides a simple set of tools for building and distributing applications. These allow creating new xdg-apps, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
   
   <h3>Installing an SDK</h3>
   
-  <p>As described above, an SDK is a special type of runtime that is used to build applcations. Typically, an SDK is paired with a runtime that will be used by the app at runtime. The GNOME 3.20 SDK is used to build applications that use the GNOME 3.20 Platform, for example. The rest of this guide uses this SDK and runtime for its examples. To do this, download the repository GPG key and then add the repository that contains the runtime and SDK:</p>
+  <p>As described above, an SDK is a special type of runtime that is used to build applcations. Typically, an SDK is paired with a runtime that will be used by the app at runtime. The GNOME 3.20 SDK is used to build applications that use the GNOME 3.20 runtime, for example. The rest of this guide uses this SDK and runtime for its examples. To do this, download the repository GPG key and then add the repository that contains the runtime and SDK:</p>
   
-  <pre><code>$ wget http://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/&#x000A;</code></pre>
+  <pre><code>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/&#x000A;</code></pre>
   
   <p>You can now download and install the runtime and SDK. (If you have already completed the tutorial on the Flatpak homepage, you will already have the runtime installed.)</p>
   
@@ -130,7 +119,7 @@
   
   <p>This might be a good time to try installing an application and having a look &#39;under the hood&#39;. To do this, you need to add a repository that contains applicatons. In this case we are going to use the gnome-apps repository and install gedit:</p>
   
-  <pre><code>$ xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps http://sdk.gnome.org/repo-apps/&#x000A;$ xdg-app --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
+  <pre><code>$ xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps https://sdk.gnome.org/repo-apps/&#x000A;$ xdg-app --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
   
   <p>You can now use the following command to get a shell in the &#39;devel sandbox&#39;:</p>
   
@@ -160,7 +149,7 @@
   
   <h3>Building</h3>
   
-  <p>The xdg-app build command is used to build an application using an SDK. This command is used to provide access to an sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
+  <p><code>xdg-app build</code> is used to build an application using an SDK. This command is used to provide access to an sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
   
   <pre><code>$ xdg-app build dictionary touch /app/some_file&#x000A;</code></pre>
   
@@ -180,13 +169,13 @@
   
   <p>Once an application has been built, the build-finish command needs to be used to specify access to different parts of the host, such as networking and graphics sockets. This command is also used to specify the command that is used to run the app (done by modifying the metadata file), and to create the application&#39;s exports directory. For example:</p>
   
-  <p>$ xdg-app build-finish dictionary --socket=x11 --share=network --command=gnome-dictionary</p>
+  <pre><code>$ xdg-app build-finish dictionary --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
   
-  <p>At this point you have successfully built an xdg-app and prepared it to be run. To test the app, run:</p>
+  <p>At this point you have successfully built an xdg-app and prepared it to be run. To test the app, you need to export the Dictionary to a repository, add that repository and then install and run the app:</p>
   
-  <pre><code>$ xdg-app build-export repo dictionary&#x000A;$ xdg-app --user install tutorial org.gnome.Dictionary&#x000A;$ xdg-app run org.gnome.Dictionary&#x000A;</code></pre>
+  <pre><code>$ xdg-app build-export repo dictionary&#x000A;$ xdg-app --user remote-add --no-gpg-verify --if-not-exists tutorial-repo repo&#x000A;$ xdg-app --user install tutorial-repo org.gnome.Dictionary&#x000A;$ xdg-app run org.gnome.Dictionary&#x000A;</code></pre>
   
-  <p>This exports the app, creates a repository called tutorial, installs the Dictionary application and runs it.</p>
+  <p>This exports the app, creates a repository called tutorial-repo, installs the Dictionary application and runs it.</p>
   
   <h2>Building more complex apps with xdg-app-builder</h2>
   
@@ -216,7 +205,7 @@
   
   <h3>File renaming</h3>
   
-  <p>Files that are exported by an xdg-app must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, xdg-app-builder allows renaming application icons, desktop files and AppData as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
+  <p>Files that are exported by an xdg-app must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, xdg-app-builder allows renaming application icons, desktop files and AppData files as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
   
   <h3>Example</h3>
   
@@ -231,12 +220,12 @@
   <li>Download and verify the Dictionary source code</li>
   <li>Build and install the source code, using the SDK rather than the host system</li>
   <li>Finish the build, by setting permissions (in this case giving access to X and the network)</li>
-  <li>Exports the resulting build to the tutorial repository, which contains the Dictionary app what was previously installed</li>
+  <li>Export the resulting build to the tutorial repository, which contains the Dictionary app that was previously installed</li>
   </ul>
   
   <p>xdg-app-builder will also do some other useful things, like creating a separately installable debug runtime (called <code>org.gnome.Dictionary.Debug</code> in this case) and separately installable translations runtimes (called <code>org.gnome.Dictionary.Locale.$lang</code>).</p>
   
-  <p>It is now possible to update the installed version of the Dictionary application with the new version that was built by xdg-app-builder:</p>
+  <p>It is now possible to update the installed version of the Dictionary application with the new version that was built and exported by xdg-app-builder:</p>
   
   <pre><code>$ xdg-app --user update org.gnome.Dictionary&#x000A;</code></pre>
   
@@ -250,21 +239,21 @@
   
   <h3>Example manifests</h3>
   
-  <p>A complete manifest for <a href="https://github.com/alexlarsson/gnome-apps-nightly/blob/master/org.gnome.Dictionary.json">GNOME Dictionary built from Git is available</a>
-  , in addition to manifests for <a href="https://github.com/alexlarsson/gnome-apps-nightly">a range of other GNOME applications</a>.</p>
+  <p>A complete manifest for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/org.gnome.Dictionary.json">GNOME Dictionary built from Git is available</a>
+  , in addition to manifests for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/">a range of other GNOME applications</a>.</p>
   
   <h2>Working with the sandbox</h2>
   
   <p>By default, an xdg-app has extremely limited access to the host environment. This includes:</p>
   
   <ul>
-  <li>No access to any host files except the runtime, the app, and <code>~/.var/app/org.test.Hello</code>, and only the last of these is writable.</li>
+  <li>No access to any host files except the runtime, the app and <code>~/.var/app/$APPID</code>. Only the last of these is writable.</li>
   <li>No access to the network.</li>
   <li>No access to any device nodes (apart from <code>/dev/null</code>, etc).</li>
   <li>No access to processes outside the sandbox.</li>
   <li>Limited syscalls.  For instance, apps can&#39;t use nonstandard network socket types or ptrace other processes.</li>
   <li>Limited access to the session D-Bus instance - an app can only own its own name on the bus.</li>
-  <li>No access to host services like X, systemd D-Bus, or PulseAudio.</li>
+  <li>No access to host services like X, system D-Bus, or PulseAudio.</li>
   </ul>
   
   <p>Most applications will need access to some of these resources in order to be useful, and xdg-app provides a number of ways to give an application access to them. The build-finish command is the simplest of these. As was seen in a previous example, this can be used to add access to graphics sockets and network resources:</p>
@@ -323,7 +312,7 @@
   
   <pre><code>--share=network&#x000A;</code></pre>
   
-  <p>Note: Giving network access also grants access to all host services listening on abstract Unix sockets (due to how network namespaces work), and these have no permission checks. This unfortunately affects e.g. the X server and the session bus which listens to abstract sockets by default. A secure distribution should disable these and just use regular sockets.</p>
+  <p>Note: giving network access also grants access to all host services listening on abstract Unix sockets (due to how network namespaces work), and these have no permission checks. This unfortunately affects e.g. the X server and the session bus which listens to abstract sockets by default. A secure distribution should disable these and just use regular sockets.</p>
   
   <p>Allow the application talk to a named service on the session bus:</p>
   
@@ -339,14 +328,14 @@
   
   <h2>Distributing applications</h2>
   
-  <p>As has already been seen, xdg-app allows remote repositories to be added, from which runtimes and applications can be installed. To do this, it uses <a href="https://ostree.readthedocs.io/en/latest/">OSTree</a>
+  <p>As has already been seen, xdg-app installs runtimes and apps from repositories. To do this, it uses <a href="https://ostree.readthedocs.io/en/latest/">OSTree</a>
   . This is similar to Git, but has been designed to handle trees of large binaries. Like Git, it has the concept of repositories and commits. Applications are stored as branches.</p>
   
   <p>To distribute an application, it must be exported to a repository. This is done using the build-export command:</p>
   
   <pre><code>$ xdg-app build-export [OPTION…] LOCATION DIRECTORY [BRANCH]&#x000A;</code></pre>
   
-  <p>The resulting repository is in an archive-z2 format. To distribute an application, all you have to do is copy this to a web server and give the URL to your users.</p>
+  <p>The resulting repository is in an archive-z2 format. To allow users to use a repository, all you have to do is copy it to a web server and give them the URL.</p>
   
   <h3>Managing repositories</h3>
   
@@ -354,26 +343,25 @@
   
   <pre><code>$ xdg-app build-update-repo --title=&quot;Nice name&quot; repo&#x000A;</code></pre>
   
-  <p><code>build-update</code> also lets you prune (<code>--prune</code>) unused objects and deltas from the repository, and even remove older revisions (using <code>--prune-depth</code>) which is useful for things like automatic nightly build repositories.</p>
+  <p>build-update also lets you prune (<code>--prune</code>) unused objects and deltas from the repository, and even remove older revisions (using <code>--prune-depth</code>) which is useful for things like automatic nightly build repositories.</p>
   
   <h3>AppData</h3>
   
-  <p>As already described, xdg-app uses the AppData standard to store user visible information about applications. This information needs to be accessible to clients in order to be displayed in app stores. To do this, build-update-repo it scans all the branches in the repository for AppData data, which is collected and commited into a repository-wide AppStream branch. xdg-app then keeps a local copy of this branch for each remote, which can manually updated using the update command. For example:</p>
+  <p>As already described, xdg-app uses the AppData standard to store user visible information about applications. This information needs to be accessible to clients in order to be displayed in app stores. To do this, build-update-repo scans all the branches in the repository for AppData data, which is collected and committed into a repository-wide AppStream branch. xdg-app then keeps a local copy of this branch for each remote, which can manually updated using the update command. For example:</p>
   
   <pre><code>$ xdg-app --user update --appstream nightly&#x000A;</code></pre>
   
   <h3>Hosting a repository</h3>
   
-  <p>While it is relatively simple to host an xdg-app repository, there are some important details to be aware of:</p>
+  <p>While it is relatively simple to host an xdg-app repository, there are some important details to be aware of.</p>
   
-  <ul>
-  <li>archive-z2 repositories contain a single file for each file in the application. This means that pull operations will do a lot of http requests. Since new requests are slow, it is important to enable HTTP keep-alive on the web server.</li>
-  <li>OSTree supports something called static deltas. These are single files in the repo that contains all the data needed to go between two revisions (or from nothing to a revision). Creating such deltas will take up more space on the server, but will make downloads much faster. This can be done with the build-update-repo --generate-static-deltas.</li>
-  </ul>
+  <p>archive-z2 repositories contain a single file for each file in the application. This means that pull operations will do a lot of HTTP requests. Since new requests are slow, it is important to enable HTTP keep-alive on the web server.</p>
+  
+  <p>OSTree supports something called static deltas. These are single files in the repo that contains all the data needed to go between two revisions (or from nothing to a revision). Creating such deltas will take up more space on the server, but will make downloads much faster. This can be done with the build-update-repo --generate-static-deltas.</p>
   
   <h3>GPG signatures</h3>
   
-  <p>By default OSTree refuses to pull from a remote repository that is not signed. To disable GPG verification, the --no-gpg-verify option needs to be used when a remote is added. Alternatively, it can be disabled on an existing remote using xdg-app remote-modify.</p>
+  <p>By default OSTree refuses to pull from a remote repository that is not signed. To disable GPG verification, the <code>--no-gpg-verify</code> option needs to be used when a remote is added. Alternatively, it can be disabled on an existing remote using xdg-app remote-modify.</p>
   
   <p>OSTree requires signatures for every commit and on repository summary files. These objects are created by the build-update-repo and build-export commands, as well as indirectly by xdg-app-builder. A GPG key should therefore be passed to each of these commands, and optionally the gpg home directory to use. For example:</p>
   

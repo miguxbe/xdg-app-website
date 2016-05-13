@@ -49,23 +49,19 @@
     </nav>
   </body>
   <section class=""><div class="container"><div class="row"><div class="col-lg-10 col-lg-offset-1">
-  <p>In order to run xdg-app applications you need to have a runtime for it. This page lists the runtimes maintained by the Gnome project.</p>
+  <h1>Runtimes</h1>
   
-  <h1>Stable runtimes</h1>
+  <p>This page lists the runtimes that are currently available for xdg-app.</p>
   
-  <p>Every major Gnome release comes with stable runtimes that contains the main gnome platform libraries. The runtimes are based on the official freedesktop.org runtimes (of a fixed version that was current when the gnome version was released). They will get minor bugfix and security updates, but should be considered ABI stable and frozen.</p>
+  <h2>Stable Runtimes</h2>
   
-  <p>The repository also contains a build of the freedesktop.org runtimes that the gnome builds are based on. There is currently no other public build of these, so the gnome repository can be considered the official build.</p>
+  <p>Stable runtimes are currently available in Freedesktop and GNOME flavours. These are hosted at <a href="https://sdk.gnome.org/repo/">https://sdk.gnome.org/repo/</a> and signed with the key at <a href="https://sdk.gnome.org/keys/gnome-sdk.gpg">https://sdk.gnome.org/keys/gnome-sdk.gpg</a>. The repository can be added with:</p>
   
-  <h2>Repo</h2>
+  <pre><code>$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/&#x000A;</code></pre>
   
-  <p>The repository is available at: <a href="http://sdk.gnome.org/repo/">http://sdk.gnome.org/repo/</a> All releases are manually signed with this key: <a href="https://sdk.gnome.org/keys/gnome-sdk.gpg">https://sdk.gnome.org/keys/gnome-sdk.gpg</a></p>
+  <p>GNOME runtimes are released with each major release and contain the main GNOME platform libraries. They are based on the official freedesktop.org runtime. At the moment they only receive minor bug fixing and security updates, but should be considered ABI stable and frozen.</p>
   
-  <p>You can add this repository to your local homedirectory with this command:</p>
-  
-  <pre><code>xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome http://sdk.gnome.org/repo/&#x000A;</code></pre>
-  
-  <p>This repository contains these runtimes:</p>
+  <h3>Available stable runtimes</h3>
   
   <table class="full"><!-- fixme make into markdown tables -->
     <tr>
@@ -123,37 +119,15 @@
     </tr>
   </table>
   
-  <p>For example, you can install the standard runtime for Gnome 3.20 with:</p>
+  <h2>Nightly Runtimes</h2>
   
-  <pre><code>xdg-app --user install gnome org.gnome.Platform 3.20&#x000A;</code></pre>
+  <p>Regular nightly builds are available of the latest GNOME and Freedesktop runtimes from Git. These are not stable and have no guarantees on ABI stability or if they even work. However, they are a useful way to test the latest version that is in development. The same repository also contains a few applications built against this runtime allowing you to test it.</p>
   
-  <p>Additionally there is a repo with stable builds of some gnome applications, which you can list with:</p>
+  <p>The nightly repository is available at <a href="https://sdk.gnome.org/nightly/repo/">https://sdk.gnome.org/nightly/repo/</a>. All releases are manually signed with the key at <a href="https://sdk.gnome.org/nightly/keys/nightly.gpg">https://sdk.gnome.org/nightly/keys/nightly.gpg</a>. This repository can be added with</p>
   
-  <pre><code>xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps http://sdk.gnome.org/repo-apps/&#x000A;xdg-app --user remote-ls gnome-apps --app&#x000A;</code></pre>
+  <pre><code>$ xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly https://sdk.gnome.org/nightly/repo/&#x000A;</code></pre>
   
-  <p>All these apps are using a version name of &quot;stable&quot;, and will be updated to the latest stable whenever there is a new gnome release. To install e.e. gedit you would run:</p>
-  
-  <pre><code>xdg-app --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
-  
-  <p>and to update it:</p>
-  
-  <pre><code>xdg-app --user update org.gnome.gedit stable&#x000A;</code></pre>
-  
-  <h1>Nightly build runtimes</h1>
-  
-  <p>There are regular (nightly builds) of the latest gnome and freedesktop runtimes from git. These are not stable and have no guarantees on ABI stability or if they even work. However they are a useful way to test the latest version of gnome that is in development.</p>
-  
-  <p>Additionally, the same repository contains a few applications built against this runtime allowing you to test it.</p>
-  
-  <h2>Repo</h2>
-  
-  <p>The repository is available at: http://sdk.gnome.org/nightly/repo/ All releases are manually signed with this key: https://sdk.gnome.org/nightly/keys/nightly.gpg</p>
-  
-  <p>You can add this repository to your local home directory with this command:</p>
-  
-  <pre><code>xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly http://sdk.gnome.org/nightly/repo/&#x000A;</code></pre>
-  
-  <p>This repository contains these runtimes:</p>
+  <h3>Available nightly runtimes</h3>
   
   <table class="full"><!-- fixme make into markdown tables -->
     <tr>
@@ -161,7 +135,7 @@
     </tr>
     <tr>
       <td>org.gnome.Platform</td>
-      <td> The unstable Gnome runtime</td>
+      <td> The unstable GNOME runtime</td>
       <td>master</td>
     </tr>
     <tr>
@@ -171,7 +145,7 @@
     </tr>
     <tr>
       <td>org.gnome.Sdk</td>
-      <td>The development runtime used to build apps, and required by apps like gnome-builder </td>
+      <td>The development runtime used to build apps, and required by apps like GNOME Builder </td>
       <td>master</td>
     </tr>
     <tr>
@@ -186,7 +160,7 @@
     </tr>
     <tr>
       <td>org.freedesktop.Platform</td>
-      <td>Smaller runtime with basic platform including X11, wayland, mesa, dbus, SDL, etc. Used as a base for org.gnome.Platform and other runtimes.</td>
+      <td>Smaller runtime with basic platform including X11, Wayland, Mesa, D-Bus, SDL, etc. Used as a base for org.gnome.Platform and other runtimes.</td>
       <td>master</td>
     </tr>
     <tr>
@@ -221,23 +195,23 @@
     </tr>
   </table>
   
-  <p>Additionally there is a repo with nightly builds of some gnome applications, which you can list with:</p>
+  <p>Additionally there is a repo with nightly builds of some GNOME applications, which can be listed with:</p>
   
-  <pre><code>xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly-apps http://sdk.gnome.org/nightly/repo-apps/&#x000A;xdg-app --user remote-ls gnome-nightly-apps --app&#x000A;</code></pre>
+  <pre><code>$ xdg-app --user remote-add --gpg-key=nightly.gpg gnome-nightly-apps https://sdk.gnome.org/nightly/repo-apps/&#x000A;$ xdg-app --user remote-ls gnome-nightly-apps --app&#x000A;</code></pre>
   
-  <p>The current list is:</p>
+  <p>This includes the following apps:</p>
   
   <pre><code>org.gnome.Builder&#x000A;org.gnome.Calculator&#x000A;org.gnome.Calendar&#x000A;org.gnome.Characters&#x000A;org.gnome.Dictionary&#x000A;org.gnome.Documents&#x000A;org.gnome.Epiphany&#x000A;org.gnome.Evince&#x000A;org.gnome.Games&#x000A;org.gnome.Maps&#x000A;org.gnome.News&#x000A;org.gnome.Polari&#x000A;org.gnome.Software.XdgApp&#x000A;org.gnome.Todo&#x000A;org.gnome.Weather&#x000A;org.gnome.bijiben&#x000A;org.gnome.clocks&#x000A;org.gnome.eog&#x000A;org.gnome.gedit&#x000A;org.gnome.iagno&#x000A;</code></pre>
   
   <p>Of particular interest is org.gnome.Software.XdgApp, which lets you browse and install xdg-app with a graphical tool.</p>
   
-  <p>All these apps are using a version name of &quot;master&quot;. To install e.e. gedit you would run:</p>
+  <p>All these apps are using a version name of &quot;master&quot;. For example, to install gedit run:</p>
   
-  <pre><code>xdg-app --user install gnome-nightly-apps org.gnome.gedit master&#x000A;</code></pre>
+  <pre><code>$ xdg-app --user install gnome-nightly-apps org.gnome.gedit master&#x000A;</code></pre>
   
-  <p>and to update it:</p>
+  <p>And to update it:</p>
   
-  <pre><code>xdg-app --user update org.gnome.gedit master&#x000A;</code></pre>
+  <pre><code>$ xdg-app --user update org.gnome.gedit master&#x000A;</code></pre>
   </div></div></div></section>
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/jquery.easing.min.js"></script>
