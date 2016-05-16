@@ -6606,21 +6606,31 @@ table {
     #footer a:active, #footer a:focus {
       color: #fff; }
   #footer .navbar-brand {
+    display: block;
     padding-top: 0;
     color: #fff;
     text-transform: uppercase;
     font-family: "Overpass", "Source Sans Pro", "Source Sans", sans-serif;
-    font-weight: bold; }
-  #footer li {
-    list-style: none;
-    display: block;
-    font-size: 80%; }
-    #footer li.toplevel {
-      text-transform: uppercase;
-      margin-bottom: 1em; }
-    #footer li ul {
-      margin: 0;
-      padding: 0; }
-      #footer li ul li {
-        text-transform: none;
-        padding-left: 1em; }
+    font-weight: bold;
+    height: inherit; }
+  #footer ul {
+    display: block; }
+    #footer ul li {
+      list-style: none;
+      display: block;
+      font-size: 80%;
+      width: 45%;
+      float: left; }
+      #footer ul li.toplevel {
+        text-transform: uppercase;
+        margin-bottom: 1em; }
+      #footer ul li a {
+        display: block; }
+      #footer ul li ul {
+        margin: 0;
+        padding: 0; }
+        #footer ul li ul li {
+          text-transform: none;
+          /* padding-left: 1em; */ }
+          #footer ul li ul li a {
+            color: #5e5e5e; }
