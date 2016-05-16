@@ -52,15 +52,29 @@
     </nav>
   </body>
   <section class="bg-dark"><div class="container"><div class="row"><div class="col-lg-10 col-lg-offset-1">
-  <h1>Getting Started with XDG-App</h1>
+  <h1>Getting Started with flatpak</h1>
   
-  <p>This guide contains everything you need to know to build and distribute applications using xdg-app. It includes an introduction to the basic concepts and a simple app building tutorial, before moving on to cover automated building and repository hosting.</p>
+  <p>This guide contains everything you need to know to build and distribute applications using flatpak. It includes an introduction to the basic concepts and a simple app building tutorial, before moving on to cover automated building and repository hosting.</p>
   
-  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have xdg-app and xdg-app-builder installed on your system. See <a href="getting.html">getting xdg-app</a> for more details on this.</p>
+  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have flatpak and flat-pak-builder installed on your system. See <a href="getting.html">getting flatpak</a> for more details on this.</p>
+  
+  <h3>Table of Contents</h3>
+  
+  <ul>
+  <li><a href="#KeyConcepts">Key Concepts</a></li>
+  <li><a href="#TheFlatpakCommand">The flatpak Command</a></li>
+  <li><a href="#AppAnatomy">Anatomy of a Flatpak App</a></li>
+  <li><a href="#BuildingSimpleApps">Building Simple Apps</a></li>
+  <li><a href="#ComplexAppsWithFlatpakBuilder">Building More Complex Apps with flatpak-builder</a></li>
+  <li><a href="#WorkingWithTheSandbox">Working with the Sandbox</a></li>
+  <li><a href="#DistributingApplications">Distributing Applications</a></li>
+  </ul>
+  
+  <p><a name="KeyConcepts"></a></p>
   
   <h2>Key Concepts</h2>
   
-  <p>xdg-app is best understood through its key concepts: runtimes, bundles, SDKs and sandboxes. These help to explain how xdg-app differs from traditional application distribution on Linux, as well as the framework&#39;s capabilities.</p>
+  <p>Flatpak is best understood through its key concepts: runtimes, bundles, SDKs and sandboxes. These help to explain how flatpak differs from traditional application distribution on Linux, as well as the framework&#39;s capabilities.</p>
   
   <h3>Runtimes</h3>
   
@@ -68,7 +82,7 @@
   
   <p>Each application must be built against a runtime, and this runtime must be installed on a host system in order for the application to run. Users can install multiple different runtimes at the same time, including different versions of the same runtime.</p>
   
-  <p>xdg-app identifies runtimes (as well as SDKs and applications) by a triple of name/arch/branch. The name is expected to be in inverse-dns notation, which needs to match the D-Bus name used for the application. For example: &#39;<code>org.gnome.Sdk/x86_64/3.14</code>&#39; or &#39;<code>org.gnome.Builder/i686/master</code>&#39;.</p>
+  <p>Flatpak identifies runtimes (as well as SDKs and applications) by a triple of name/arch/branch. The name is expected to be in inverse-dns notation, which needs to match the D-Bus name used for the application. For example: &#39;<code>org.gnome.Sdk/x86_64/3.14</code>&#39; or &#39;<code>org.gnome.Builder/i686/master</code>&#39;.</p>
   
   <h3>Application bundles</h3>
   
@@ -82,17 +96,21 @@
   
   <h3>Sandboxes</h3>
   
-  <p>Each xdg-app is built and run in an isolated environment. By default, the application can only &#39;see&#39; itself and its runtime. Access to user files, network, graphics sockets, subsystems on the bus and devices all has to be explicitly granted. (As will described later, xdg-app provides several ways to do this.) Access to other things, such as other processes, is (deliberately) not possible.</p>
+  <p>With flatpak, each app is built and run in an isolated environment. By default, the application can only &#39;see&#39; itself and its runtime. Access to user files, network, graphics sockets, subsystems on the bus and devices all has to be explicitly granted. (As will be described later, flatpak provides several ways to do this.) Access to other things, such as other processes, is (deliberately) not possible.</p>
   
-  <h2>The xdg-app command</h2>
+  <p><a name="TheFlatpakCommand"></a></p>
   
-  <p><code>xdg-app</code> is the tool that is used install, remove and update runtimes and applications. It can also be used to view what is currently installed, and has commands for building and distributing application bundles. <code>xdg-app --help</code> provides a full list of available commands.</p>
+  <h2>The flatpak Command</h2>
   
-  <h2>Anatomy of an xdg-app</h2>
+  <p><code>flatpak</code> is the tool that is used install, remove and update runtimes and applications. It can also be used to view what is currently installed, and has commands for building and distributing application bundles. <code>flatpak --help</code> provides a full list of available commands.</p>
   
-  <p>Each xdg-app has the following basic structure:</p>
+  <p><a name="AppAnatomy"></a></p>
   
-  <pre><code>metadata    # A keyfile which provides information about the application, &#x000A;            # including information that is necessary for setting up the sandbox &#x000A;            # for running the application&#x000A;/files      # The files that make up the application&#x000A;/files/bin  # Application binaries&#x000A;/export     # Files which the host environment needs access to, such as the &#x000A;            # application&#39;s desktop file, icon and D-Bus service file&#x000A;</code></pre>
+  <h2>Anatomy of a Flatpak App</h2>
+  
+  <p>Each flatpak app has the following basic structure:</p>
+  
+  <pre><code>metadata    # A keyfile which provides information about the application,&#x000A;            # including information that is necessary for setting up the sandbox&#x000A;            # for running the application&#x000A;/files      # The files that make up the application&#x000A;/files/bin  # Application binaries&#x000A;/export     # Files which the host environment needs access to, such as the&#x000A;            # application&#39;s desktop file, icon and D-Bus service file&#x000A;</code></pre>
   
   <p>A typical metadata file looks like this:</p>
   
@@ -104,37 +122,39 @@
   
   <h3>AppData</h3>
   
-  <p>Many Linux distributions provide an app store or app center for browsing and installing applications. <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#sect-Quickstart-DesktopApps">AppData</a> is a standard format for providing application information that can be used by app stores, such as an application description and screenshots. xdg-app makes use of the AppData standard, and application authors are recommended to use it to include information about their applications.</p>
+  <p>Many Linux distributions provide an app store or app center for browsing and installing applications. <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#sect-Quickstart-DesktopApps">AppData</a> is a standard format for providing application information that can be used by app stores, such as an application description and screenshots. Flatpak makes use of the AppData standard, and application authors are recommended to use it to include information about their applications.</p>
   
-  <h2>Building a simple app using xdg-app</h2>
+  <p><a name="BuildingSimpleApps"></a></p>
   
-  <p><code>xdg-app</code> provides a simple set of tools for building and distributing applications. These allow creating new xdg-apps, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
+  <h2>Building Simple Apps</h2>
+  
+  <p><code>flatpak</code> provides a simple set of tools for building and distributing applications. These allow creating new flatpaks, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
   
   <h3>Installing an SDK</h3>
   
   <p>As described above, an SDK is a special type of runtime that is used to build applcations. Typically, an SDK is paired with a runtime that will be used by the app at runtime. The GNOME 3.20 SDK is used to build applications that use the GNOME 3.20 runtime, for example. The rest of this guide uses this SDK and runtime for its examples. To do this, download the repository GPG key and then add the repository that contains the runtime and SDK:</p>
   
-  <pre><code>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ xdg-app remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/&#x000A;</code></pre>
+  <pre><code>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ flatpak remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/&#x000A;</code></pre>
   
   <p>You can now download and install the runtime and SDK. (If you have already completed the tutorial on the Flatpak homepage, you will already have the runtime installed.)</p>
   
-  <pre><code>$ xdg-app --user install gnome org.gnome.Platform 3.20&#x000A;$ xdg-app --user install gnome org.gnome.Sdk 3.20&#x000A;</code></pre>
+  <pre><code>$ flatpak --user install gnome org.gnome.Platform 3.20&#x000A;$ flatpak --user install gnome org.gnome.Sdk 3.20&#x000A;</code></pre>
   
   <p>This might be a good time to try installing an application and having a look &#39;under the hood&#39;. To do this, you need to add a repository that contains applicatons. In this case we are going to use the gnome-apps repository and install gedit:</p>
   
-  <pre><code>$ xdg-app --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps https://sdk.gnome.org/repo-apps/&#x000A;$ xdg-app --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
+  <pre><code>$ flatpak --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps https://sdk.gnome.org/repo-apps/&#x000A;$ flatpak --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
   
   <p>You can now use the following command to get a shell in the &#39;devel sandbox&#39;:</p>
   
-  <pre><code>$ xdg-app run --devel --command=bash org.gnome.gedit&#x000A;</code></pre>
+  <pre><code>$ flatpak run --devel --command=bash org.gnome.gedit&#x000A;</code></pre>
   
-  <p>This gives you an environment which has the application bundle mounted in <code>/app</code>, and the SDK it was built against mounted in <code>/usr</code>. You can explore these two directories to see what a typical xdg-app looks like, as well as what is included in the SDK.</p>
+  <p>This gives you an environment which has the application bundle mounted in <code>/app</code>, and the SDK it was built against mounted in <code>/usr</code>. You can explore these two directories to see what a typical flatpak looks like, as well as what is included in the SDK.</p>
   
   <h3>Creating an app</h3>
   
   <p>To create an application, the first step is to use the build-init command. This creates a directory into which an applcation can be built, which contains the correct directory structure and a metadata file which contains information about the app. The format for build-init is:</p>
   
-  <pre><code>xdg-app build-init DIRECTORY APPNAME SDK RUNTIME [BRANCH]&#x000A;</code></pre>
+  <pre><code>flatpak build-init DIRECTORY APPNAME SDK RUNTIME [BRANCH]&#x000A;</code></pre>
   
   <ul>
   <li><code>DIRECTORY</code> is the name of the directory that will be created to contain the application</li>
@@ -146,25 +166,25 @@
   
   <p>For example, to build the GNOME Dictionary application using the GNOME 3.20 SDK, the command would look like:</p>
   
-  <pre><code>$ xdg-app build-init dictionary org.gnome.Dictionary org.gnome.Sdk org.gnome.Platform 3.20&#x000A;</code></pre>
+  <pre><code>$ flatpak build-init dictionary org.gnome.Dictionary org.gnome.Sdk org.gnome.Platform 3.20&#x000A;</code></pre>
   
   <p>You can try this command now. In the next step we will build an application inside the resulting dictionary directory.</p>
   
   <h3>Building</h3>
   
-  <p><code>xdg-app build</code> is used to build an application using an SDK. This command is used to provide access to an sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
+  <p><code>flatpak build</code> is used to build an application using an SDK. This command is used to provide access to an sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
   
-  <pre><code>$ xdg-app build dictionary touch /app/some_file&#x000A;</code></pre>
+  <pre><code>$ flatpak build dictionary touch /app/some_file&#x000A;</code></pre>
   
   <p>(It is best to remove this file before continuing.)</p>
   
-  <p>The build command allows existing applications that have been made using the traditional configure, make, make install routine to be built inside an xdg-app. You can try this using GNOME Dictionary. First, download the source files, extract them and switch to the resulting directory:</p>
+  <p>The build command allows existing applications that have been made using the traditional configure, make, make install routine to be built inside an flatpak. You can try this using GNOME Dictionary. First, download the source files, extract them and switch to the resulting directory:</p>
   
   <pre><code>$ wget https://download.gnome.org/sources/gnome-dictionary/3.20/gnome-dictionary-3.20.0.tar.xz&#x000A;$ tar xvf gnome-dictionary-3.20.0.tar.xz&#x000A;$ cd gnome-dictionary-3.20.0/&#x000A;</code></pre>
   
   <p>Then you can use the build command to build and install the source inside the dictionary directory that was previously made:</p>
   
-  <pre><code>$ xdg-app build ../dictionary ./configure --prefix=/app&#x000A;$ xdg-app build ../dictionary make&#x000A;$ xdg-app build ../dictionary make install&#x000A;$ cd ..&#x000A;</code></pre>
+  <pre><code>$ flatpak build ../dictionary ./configure --prefix=/app&#x000A;$ flatpak build ../dictionary make&#x000A;$ flatpak build ../dictionary make install&#x000A;$ cd ..&#x000A;</code></pre>
   
   <p>Since these are run in a sandbox, the compiler and other tools from the SDK are used to build and install, rather than those on the host system.</p>
   
@@ -172,23 +192,25 @@
   
   <p>Once an application has been built, the build-finish command needs to be used to specify access to different parts of the host, such as networking and graphics sockets. This command is also used to specify the command that is used to run the app (done by modifying the metadata file), and to create the application&#39;s exports directory. For example:</p>
   
-  <pre><code>$ xdg-app build-finish dictionary --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak build-finish dictionary --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
   
-  <p>At this point you have successfully built an xdg-app and prepared it to be run. To test the app, you need to export the Dictionary to a repository, add that repository and then install and run the app:</p>
+  <p>At this point you have successfully built an flatpak and prepared it to be run. To test the app, you need to export the Dictionary to a repository, add that repository and then install and run the app:</p>
   
-  <pre><code>$ xdg-app build-export repo dictionary&#x000A;$ xdg-app --user remote-add --no-gpg-verify --if-not-exists tutorial-repo repo&#x000A;$ xdg-app --user install tutorial-repo org.gnome.Dictionary&#x000A;$ xdg-app run org.gnome.Dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak build-export repo dictionary&#x000A;$ flatpak --user remote-add --no-gpg-verify --if-not-exists tutorial-repo repo&#x000A;$ flatpak --user install tutorial-repo org.gnome.Dictionary&#x000A;$ flatpak run org.gnome.Dictionary&#x000A;</code></pre>
   
   <p>This exports the app, creates a repository called tutorial-repo, installs the Dictionary application and runs it.</p>
   
-  <h2>Building more complex apps with xdg-app-builder</h2>
+  <p><a name="ComplexAppsWithFlatpakBuilder"></a></p>
   
-  <p>If an application requires additional dependencies that aren&#39;t provided by its runtime, xdg-app allows them to be bundled as modules as part of the app itself. This requires building each module inside the application, which can be a lot of work. For this reason, the xdg-app-builder tool is provided to automate the build process.</p>
+  <h2>Building More Complex Apps With flatpak-builder</h2>
   
-  <p>xdg-app-builder takes care of the routine commands used to build an app and any bundled modules, thus allowing application building to be automated. To do this, it expects modules to be built in a standard manner by following what is called the <a href="https://github.com/cgwalters/build-api">Build API</a>. If any modules don&#39;t conform to this API, they will need to be modified.</p>
+  <p>If an application requires additional dependencies that aren&#39;t provided by its runtime, flatpak allows them to be bundled as modules as part of the app itself. This requires building each module inside the application, which can be a lot of work. For this reason, the flatpak-builder tool is provided to automate the build process.</p>
+  
+  <p>flatpak-builder takes care of the routine commands used to build an app and any bundled modules, thus allowing application building to be automated. To do this, it expects modules to be built in a standard manner by following what is called the <a href="https://github.com/cgwalters/build-api">Build API</a>. If any modules don&#39;t conform to this API, they will need to be modified.</p>
   
   <h3>Manifests</h3>
   
-  <p>xdg-app-builder uses a json file to describe the parameters for building an app, as well as each of the modules to be bundled. This file is called the manifest. Module sources can be of several types, including archives (<code>.tar</code>, <code>.zip</code>), Git, Bzr, patch files or shell commands that are run.</p>
+  <p>flatpak-builder uses a json file to describe the parameters for building an app, as well as each of the modules to be bundled. This file is called the manifest. Module sources can be of several types, including archives (<code>.tar</code>, <code>.zip</code>), Git, Bzr, patch files or shell commands that are run.</p>
   
   <p>The GNOME Dictionary manifest is short, because the only module is the application itself:</p>
   
@@ -196,7 +218,7 @@
   
   <h3>Cleanup</h3>
   
-  <p>xdg-app-builder performs a cleanup phase after the build, which can be used to remove headers and development docs, among other things. Two properties in the manifest file can be used for this. First, a list of filename patterns can be included:</p>
+  <p>flatpak-builder performs a cleanup phase after the build, which can be used to remove headers and development docs, among other things. Two properties in the manifest file can be used for this. First, a list of filename patterns can be included:</p>
   
   <pre><code>cleanup&quot;: [ &quot;/include&quot;, &quot;/bin/foo-*&quot;, &quot;*.a&quot; ]&#x000A;</code></pre>
   
@@ -208,13 +230,13 @@
   
   <h3>File renaming</h3>
   
-  <p>Files that are exported by an xdg-app must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, xdg-app-builder allows renaming application icons, desktop files and AppData files as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
+  <p>Files that are exported by an flatpak must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, flatpak-builder allows renaming application icons, desktop files and AppData files as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
   
   <h3>Example</h3>
   
-  <p>You can try xdg-app-builder for yourself, using the repository that and app that was created in the previous section. To do this, place the manifest json from above into a file called <code>org.gnome.Dictionary.json</code> and run the following command:</p>
+  <p>You can try flatpak-builder for yourself, using the repository that and app that was created in the previous section. To do this, place the manifest json from above into a file called <code>org.gnome.Dictionary.json</code> and run the following command:</p>
   
-  <pre><code>$ xdg-app-builder --repo=repo dictionary2 org.gnome.Dictionary.json&#x000A;</code></pre>
+  <pre><code>$ flatpak-builder --repo=repo dictionary2 org.gnome.Dictionary.json&#x000A;</code></pre>
   
   <p>This will:</p>
   
@@ -226,28 +248,30 @@
   <li>Export the resulting build to the tutorial repository, which contains the Dictionary app that was previously installed</li>
   </ul>
   
-  <p>xdg-app-builder will also do some other useful things, like creating a separately installable debug runtime (called <code>org.gnome.Dictionary.Debug</code> in this case) and separately installable translations runtimes (called <code>org.gnome.Dictionary.Locale.$lang</code>).</p>
+  <p>flatpak-builder will also do some other useful things, like creating a separately installable debug runtime (called <code>org.gnome.Dictionary.Debug</code> in this case) and separately installable translations runtimes (called <code>org.gnome.Dictionary.Locale.$lang</code>).</p>
   
-  <p>It is now possible to update the installed version of the Dictionary application with the new version that was built and exported by xdg-app-builder:</p>
+  <p>It is now possible to update the installed version of the Dictionary application with the new version that was built and exported by flatpak-builder:</p>
   
-  <pre><code>$ xdg-app --user update org.gnome.Dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak --user update org.gnome.Dictionary&#x000A;</code></pre>
   
-  <p>To check that the application has been successfully updated, you can compare the sha256 commit of the installed app with the commit ID that was printed by xdg-app-builder:</p>
+  <p>To check that the application has been successfully updated, you can compare the sha256 commit of the installed app with the commit ID that was printed by flatpak-builder:</p>
   
-  <pre><code>$ xdg-app --user info org.gnome.Dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak --user info org.gnome.Dictionary&#x000A;</code></pre>
   
   <p>And finally, you can run the new version of the Dictionary app:</p>
   
-  <pre><code>$ xdg-app run org.gnome.Dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak run org.gnome.Dictionary&#x000A;</code></pre>
   
   <h3>Example manifests</h3>
   
   <p>A complete manifest for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/org.gnome.Dictionary.json">GNOME Dictionary built from Git is available</a>
   , in addition to manifests for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/">a range of other GNOME applications</a>.</p>
   
-  <h2>Working with the sandbox</h2>
+  <p><a name="WorkingWithTheSandbox"></a></p>
   
-  <p>By default, an xdg-app has extremely limited access to the host environment. This includes:</p>
+  <h2>Working with the Sandbox</h2>
+  
+  <p>By default, an flatpak has extremely limited access to the host environment. This includes:</p>
   
   <ul>
   <li>No access to any host files except the runtime, the app and <code>~/.var/app/$APPID</code>. Only the last of these is writable.</li>
@@ -259,9 +283,9 @@
   <li>No access to host services like X, system D-Bus, or PulseAudio.</li>
   </ul>
   
-  <p>Most applications will need access to some of these resources in order to be useful, and xdg-app provides a number of ways to give an application access to them. The build-finish command is the simplest of these. As was seen in a previous example, this can be used to add access to graphics sockets and network resources:</p>
+  <p>Most applications will need access to some of these resources in order to be useful, and flatpak provides a number of ways to give an application access to them. The build-finish command is the simplest of these. As was seen in a previous example, this can be used to add access to graphics sockets and network resources:</p>
   
-  <pre><code>$ xdg-app build-finish dictionary2 --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
+  <pre><code>$ flatpak build-finish dictionary2 --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
   
   <p>These arguments translate into several properties in the application metadata file:</p>
   
@@ -269,25 +293,25 @@
   
   <p>Note that in this example access to the filesystem wasn&#39;t granted. This can be tested by installing the resulting application and running:</p>
   
-  <pre><code>$ xdg-app run --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
+  <pre><code>$ flatpak run --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
   
-  <p>build-finish allows a whole range of resources to be added to an application. Run <code>xdg-app build-finish --help</code> to view the full list.</p>
+  <p>build-finish allows a whole range of resources to be added to an application. Run <code>flatpak build-finish --help</code> to view the full list.</p>
   
-  <p>There are several ways to override the permissions that are set in an application&#39;s metadata file. One of these is to override them using xdg-app run, which accepts the same parameters as build-finish. For example, this will let the Dictionary application see your home directory:</p>
+  <p>There are several ways to override the permissions that are set in an application&#39;s metadata file. One of these is to override them using flatpak run, which accepts the same parameters as build-finish. For example, this will let the Dictionary application see your home directory:</p>
   
-  <pre><code>$ xdg-app run --filesystem=home --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
+  <pre><code>$ flatpak run --filesystem=home --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
   
-  <p>xdg-app run can also be used to permanently override an application&#39;s permissions:</p>
+  <p>flatpak run can also be used to permanently override an application&#39;s permissions:</p>
   
-  <pre><code>$ xdg-app --user override --filesystem=home org.gnome.Dictionary&#x000A;$ xdg-app run --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
+  <pre><code>$ flatpak --user override --filesystem=home org.gnome.Dictionary&#x000A;$ flatpak run --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
   
   <p>It is also possible to remove permissions using the same method. You can use the following command to see what happens when access to the filesystem is removed, for example:</p>
   
-  <pre><code> $ xdg-app run --nofilesystem=home --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
+  <pre><code> $ flatpak run --nofilesystem=home --command=ls org.gnome.Dictionary ~/&#x000A;</code></pre>
   
   <h3>Useful sandbox permissions</h3>
   
-  <p>xdg-app provides an array of options for controlling sandbox permissions. The following are some of the most useful.</p>
+  <p>flatpak provides an array of options for controlling sandbox permissions. The following are some of the most useful.</p>
   
   <p>Grant access to files:</p>
   
@@ -329,34 +353,36 @@
   
   <pre><code>--socket=system-bus --socket=session-bus&#x000A;</code></pre>
   
-  <h2>Distributing applications</h2>
+  <p><a name="DistributingApplications"></a></p>
   
-  <p>As has already been seen, xdg-app installs runtimes and apps from repositories. To do this, it uses <a href="https://ostree.readthedocs.io/en/latest/">OSTree</a>
+  <h2>Distributing Applications</h2>
+  
+  <p>As has already been seen, flatpak installs runtimes and apps from repositories. To do this, it uses <a href="https://ostree.readthedocs.io/en/latest/">OSTree</a>
   . This is similar to Git, but has been designed to handle trees of large binaries. Like Git, it has the concept of repositories and commits. Applications are stored as branches.</p>
   
   <p>To distribute an application, it must be exported to a repository. This is done using the build-export command:</p>
   
-  <pre><code>$ xdg-app build-export [OPTION…] LOCATION DIRECTORY [BRANCH]&#x000A;</code></pre>
+  <pre><code>$ flatpak build-export [OPTION…] LOCATION DIRECTORY [BRANCH]&#x000A;</code></pre>
   
   <p>The resulting repository is in an archive-z2 format. To allow users to use a repository, all you have to do is copy it to a web server and give them the URL.</p>
   
   <h3>Managing repositories</h3>
   
-  <p>The xdg-app build-update-repo command provides most of the tools for managing repositories. For example, to set a user readable name for a repository:</p>
+  <p>The flatpak build-update-repo command provides most of the tools for managing repositories. For example, to set a user readable name for a repository:</p>
   
-  <pre><code>$ xdg-app build-update-repo --title=&quot;Nice name&quot; repo&#x000A;</code></pre>
+  <pre><code>$ flatpak build-update-repo --title=&quot;Nice name&quot; repo&#x000A;</code></pre>
   
   <p>build-update also lets you prune (<code>--prune</code>) unused objects and deltas from the repository, and even remove older revisions (using <code>--prune-depth</code>) which is useful for things like automatic nightly build repositories.</p>
   
   <h3>AppData</h3>
   
-  <p>As already described, xdg-app uses the AppData standard to store user visible information about applications. This information needs to be accessible to clients in order to be displayed in app stores. To do this, build-update-repo scans all the branches in the repository for AppData data, which is collected and committed into a repository-wide AppStream branch. xdg-app then keeps a local copy of this branch for each remote, which can manually updated using the update command. For example:</p>
+  <p>As already described, flatpak uses the AppData standard to store user visible information about applications. This information needs to be accessible to clients in order to be displayed in app stores. To do this, build-update-repo scans all the branches in the repository for AppData data, which is collected and committed into a repository-wide AppStream branch. flatpak then keeps a local copy of this branch for each remote, which can manually updated using the update command. For example:</p>
   
-  <pre><code>$ xdg-app --user update --appstream nightly&#x000A;</code></pre>
+  <pre><code>$ flatpak --user update --appstream nightly&#x000A;</code></pre>
   
   <h3>Hosting a repository</h3>
   
-  <p>While it is relatively simple to host an xdg-app repository, there are some important details to be aware of.</p>
+  <p>While it is relatively simple to host an flatpak repository, there are some important details to be aware of.</p>
   
   <p>archive-z2 repositories contain a single file for each file in the application. This means that pull operations will do a lot of HTTP requests. Since new requests are slow, it is important to enable HTTP keep-alive on the web server.</p>
   
@@ -364,11 +390,11 @@
   
   <h3>GPG signatures</h3>
   
-  <p>By default OSTree refuses to pull from a remote repository that is not signed. To disable GPG verification, the <code>--no-gpg-verify</code> option needs to be used when a remote is added. Alternatively, it can be disabled on an existing remote using xdg-app remote-modify.</p>
+  <p>By default OSTree refuses to pull from a remote repository that is not signed. To disable GPG verification, the <code>--no-gpg-verify</code> option needs to be used when a remote is added. Alternatively, it can be disabled on an existing remote using flatpak remote-modify.</p>
   
-  <p>OSTree requires signatures for every commit and on repository summary files. These objects are created by the build-update-repo and build-export commands, as well as indirectly by xdg-app-builder. A GPG key should therefore be passed to each of these commands, and optionally the gpg home directory to use. For example:</p>
+  <p>OSTree requires signatures for every commit and on repository summary files. These objects are created by the build-update-repo and build-export commands, as well as indirectly by flatpak-builder. A GPG key should therefore be passed to each of these commands, and optionally the gpg home directory to use. For example:</p>
   
-  <pre><code>$ xdg-app build-export --gpg-sign=KEYID --gpg-homedir=/some/dir appdir repo&#x000A;</code></pre>
+  <pre><code>$ flatpak build-export --gpg-sign=KEYID --gpg-homedir=/some/dir appdir repo&#x000A;</code></pre>
   </div></div></div></section>
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/jquery.easing.min.js"></script>

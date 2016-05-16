@@ -52,27 +52,27 @@
     </nav>
   </body>
   <section class=""><div class="container"><div class="row"><div class="col-lg-10 col-lg-offset-1">
-  <h1>Getting xdg-app</h1>
+  <h1>Getting flatpak</h1>
   
-  <p>xdg-app is available for the most common Linux distributions.</p>
+  <p>flatpak is available for the most common Linux distributions.</p>
   
   <h3>Fedora</h3>
   
-  <p><code>xdg-app</code> is available for Fedora from version 22.</p>
+  <p><code>flatpak</code> is available for Fedora from version 22.</p>
   
   <h3>Ubuntu</h3>
   
-  <p><code>xdg-app</code> is available for Ubuntu 14.04, 15.04, 15.10 and 16.04 using a PPA. To install, run:</p>
+  <p><code>flatpak</code> is available for Ubuntu 14.04, 15.04, 15.10 and 16.04 using a PPA. To install, run:</p>
   
-  <pre><code>sudo add-apt-repository ppa:alexlarsson/xdg-app&#x000A;sudo apt-get update&#x000A;sudo apt-get install xdg-app&#x000A;</code></pre>
+  <pre><code>sudo add-apt-repository ppa:alexlarsson/flatpak&#x000A;sudo apt-get update&#x000A;sudo apt-get install flatpak&#x000A;</code></pre>
   
   <h3>Debian</h3>
   
   <p>A custom apt repository is available for Debian Jesse. To install, run the following as root:</p>
   
-  <pre><code>wget -O - https://sdk.gnome.org/apt/debian/conf/alexl.gpg.key|apt-key add -&#x000A;echo &quot;deb [arch=amd64] https://sdk.gnome.org/apt/debian/ jessie main&quot; &gt; /etc/apt/sources.list.d/xdg-app.list&#x000A;apt update&#x000A;apt install xdg-app&#x000A;</code></pre>
+  <pre><code>wget -O - https://sdk.gnome.org/apt/debian/conf/alexl.gpg.key|apt-key add -&#x000A;echo &quot;deb [arch=amd64] https://sdk.gnome.org/apt/debian/ jessie main&quot; &gt; /etc/apt/sources.list.d/flatpak.list&#x000A;apt update&#x000A;apt install flatpak&#x000A;</code></pre>
   
-  <p>This will install xdg-app, but by default Debian disallows user-namespaces as non-root, which means xdg-app will not work. To enable this run:</p>
+  <p>This will install flatpak, but by default Debian disallows user-namespaces as non-root, which means flatpak will not work. To enable this run:</p>
   
   <pre><code>sysctl kernel.unprivileged_userns_clone=1&#x000A;</code></pre>
   
@@ -82,11 +82,11 @@
   
   <h3>Arch</h3>
   
-  <p><code>xdg-app</code> is available in the AUR.</p>
+  <p><code>flatpak</code> is available in the AUR.</p>
   
   <h3>Mageia</h3>
   
-  <p><code>xdg-app</code> is available in Cauldron.</p>
+  <p><code>flatpak</code> is available in Cauldron.</p>
   </div></div></div></section>
   <script src="javascripts/jquery.js"></script>
   <script src="javascripts/jquery.easing.min.js"></script>
