@@ -59,17 +59,7 @@
   
   <h3>Table of Contents</h3>
   
-  <ul>
-  <li><a href="#KeyConcepts">Key Concepts</a></li>
-  <li><a href="#TheFlatpakCommand">The flatpak Command</a></li>
-  <li><a href="#AppAnatomy">Anatomy of a Flatpak App</a></li>
-  <li><a href="#BuildingSimpleApps">Building Simple Apps</a></li>
-  <li><a href="#ComplexAppsWithFlatpakBuilder">Building More Complex Apps with flatpak-builder</a></li>
-  <li><a href="#WorkingWithTheSandbox">Working with the Sandbox</a></li>
-  <li><a href="#DistributingApplications">Distributing Applications</a></li>
-  </ul>
-  
-  <p><a name="KeyConcepts"></a></p>
+  <ul data-toc data-toc-headings="h2"></ul>
   
   <h2>Key Concepts</h2>
   
@@ -97,13 +87,9 @@
   
   <p>With flatpak, each app is built and run in an isolated environment. By default, the application can only &#39;see&#39; itself and its runtime. Access to user files, network, graphics sockets, subsystems on the bus and devices all has to be explicitly granted. (As will be described later, flatpak provides several ways to do this.) Access to other things, such as other processes, is (deliberately) not possible.</p>
   
-  <p><a name="TheFlatpakCommand"></a></p>
-  
   <h2>The flatpak Command</h2>
   
   <p><code>flatpak</code> is the tool that is used install, remove and update runtimes and applications. It can also be used to view what is currently installed, and has commands for building and distributing application bundles. <code>flatpak --help</code> provides a full list of available commands.</p>
-  
-  <p><a name="AppAnatomy"></a></p>
   
   <h2>Anatomy of a Flatpak App</h2>
   
@@ -122,8 +108,6 @@
   <h3>AppData</h3>
   
   <p>Many Linux distributions provide an app store or app center for browsing and installing applications. <a href="https://www.freedesktop.org/software/appstream/docs/chap-Quickstart.html#sect-Quickstart-DesktopApps">AppData</a> is a standard format for providing application information that can be used by app stores, such as an application description and screenshots. Flatpak makes use of the AppData standard, and application authors are recommended to use it to include information about their applications.</p>
-  
-  <p><a name="BuildingSimpleApps"></a></p>
   
   <h2>Building Simple Apps</h2>
   
@@ -199,8 +183,6 @@
   
   <p>This exports the app, creates a repository called tutorial-repo, installs the Dictionary application and runs it.</p>
   
-  <p><a name="ComplexAppsWithFlatpakBuilder"></a></p>
-  
   <h2>Building More Complex Apps With flatpak-builder</h2>
   
   <p>If an application requires additional dependencies that aren&#39;t provided by its runtime, flatpak allows them to be bundled as modules as part of the app itself. This requires building each module inside the application, which can be a lot of work. For this reason, the flatpak-builder tool is provided to automate the build process.</p>
@@ -265,8 +247,6 @@
   
   <p>A complete manifest for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/org.gnome.Dictionary.json">GNOME Dictionary built from Git is available</a>
   , in addition to manifests for <a href="https://git.gnome.org/browse/gnome-apps-nightly/tree/">a range of other GNOME applications</a>.</p>
-  
-  <p><a name="WorkingWithTheSandbox"></a></p>
   
   <h2>Working with the Sandbox</h2>
   
@@ -351,8 +331,6 @@
   <p>Allow the application unlimited access to all of D-Bus:</p>
   
   <pre><code>--socket=system-bus --socket=session-bus&#x000A;</code></pre>
-  
-  <p><a name="DistributingApplications"></a></p>
   
   <h2>Distributing Applications</h2>
   
@@ -442,6 +420,7 @@
   <script src="javascripts/jquery.easing.min.js"></script>
   <script src="javascripts/all.js"></script>
   <script src="javascripts/bootstrap.js"></script>
+  <script src="javascripts/jquery.toc.min.js"></script>
 </html>
 <script>
   
