@@ -26,27 +26,26 @@
           </button>
           <a class='navbar-brand page-scroll' href='index.html'>Flatpak</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
           <ul class='nav navbar-nav navbar-right'>
             <li>
-              <a class='page-scroll' href='index.html#about'>About</a>
+              <a href='index.html#about'>About</a>
             </li>
             <li>
-              <a class='page-scroll' href='index.html#users'>Users</a>
+              <a href='index.html#users'>Users</a>
             </li>
             <li>
-              <a class='page-scroll' href='index.html#developers'>Developers</a>
+              <a href='index.html#developers'>Developers</a>
             </li>
             <li>
-              <a class='page-scroll' href='index.html#get-involved'>Get Involed</a>
+              <a href='index.html#get-involved'>Get&nbsp;Involved</a>
             </li>
             <li>
               <a class='page-scroll' href='faq.html'>FAQ</a>
             </li>
           </ul>
+          <!-- /.navbar-collapse -->
         </div>
-        <!-- /.navbar-collapse -->
       </div>
       <!-- /.container-fluid -->
     </nav>
@@ -140,7 +139,7 @@
   
   <pre><code>$ flatpak --user install gnome org.gnome.Platform 3.20&#x000A;$ flatpak --user install gnome org.gnome.Sdk 3.20&#x000A;</code></pre>
   
-  <p>This might be a good time to try installing an application and having a look &#39;under the hood&#39;. To do this, you need to add a repository that contains applicatons. In this case we are going to use the gnome-apps repository and install gedit:</p>
+  <p>This might be a good time to try installing an application and having a look &#39;under the hood&#39;. To do this, you need to add a repository that contains applications. In this case we are going to use the gnome-apps repository and install gedit:</p>
   
   <pre><code>$ flatpak --user remote-add --gpg-key=gnome-sdk.gpg gnome-apps https://sdk.gnome.org/repo-apps/&#x000A;$ flatpak --user install gnome-apps org.gnome.gedit stable&#x000A;</code></pre>
   
@@ -172,13 +171,13 @@
   
   <h3>Building</h3>
   
-  <p><code>flatpak build</code> is used to build an application using an SDK. This command is used to provide access to an sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
+  <p><code>flatpak build</code> is used to build an application using an SDK. This command is used to provide access to a sandbox. For example, the following will create a file inside the appdir sandbox (in the files directory):</p>
   
   <pre><code>$ flatpak build dictionary touch /app/some_file&#x000A;</code></pre>
   
   <p>(It is best to remove this file before continuing.)</p>
   
-  <p>The build command allows existing applications that have been made using the traditional configure, make, make install routine to be built inside an flatpak. You can try this using GNOME Dictionary. First, download the source files, extract them and switch to the resulting directory:</p>
+  <p>The build command allows existing applications that have been made using the traditional configure, make, make install routine to be built inside a flatpak. You can try this using GNOME Dictionary. First, download the source files, extract them and switch to the resulting directory:</p>
   
   <pre><code>$ wget https://download.gnome.org/sources/gnome-dictionary/3.20/gnome-dictionary-3.20.0.tar.xz&#x000A;$ tar xvf gnome-dictionary-3.20.0.tar.xz&#x000A;$ cd gnome-dictionary-3.20.0/&#x000A;</code></pre>
   
@@ -194,7 +193,7 @@
   
   <pre><code>$ flatpak build-finish dictionary --socket=x11 --share=network --command=gnome-dictionary&#x000A;</code></pre>
   
-  <p>At this point you have successfully built an flatpak and prepared it to be run. To test the app, you need to export the Dictionary to a repository, add that repository and then install and run the app:</p>
+  <p>At this point you have successfully built a flatpak and prepared it to be run. To test the app, you need to export the Dictionary to a repository, add that repository and then install and run the app:</p>
   
   <pre><code>$ flatpak build-export repo dictionary&#x000A;$ flatpak --user remote-add --no-gpg-verify --if-not-exists tutorial-repo repo&#x000A;$ flatpak --user install tutorial-repo org.gnome.Dictionary&#x000A;$ flatpak run org.gnome.Dictionary&#x000A;</code></pre>
   
@@ -230,11 +229,11 @@
   
   <h3>File renaming</h3>
   
-  <p>Files that are exported by an flatpak must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, flatpak-builder allows renaming application icons, desktop files and AppData files as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
+  <p>Files that are exported by a flatpak must be named using the application ID. However, application&#39;s source files will typically not follow this convention. To get around this, flatpak-builder allows renaming application icons, desktop files and AppData files as a part of the build process, using the rename-icon, rename-desktop-file and rename-appdata properties.</p>
   
   <h3>Example</h3>
   
-  <p>You can try flatpak-builder for yourself, using the repository that and app that was created in the previous section. To do this, place the manifest json from above into a file called <code>org.gnome.Dictionary.json</code> and run the following command:</p>
+  <p>You can try flatpak-builder for yourself, using the repository that was created in the previous section. To do this, place the manifest json from above into a file called <code>org.gnome.Dictionary.json</code> and run the following command:</p>
   
   <pre><code>$ flatpak-builder --repo=repo dictionary2 org.gnome.Dictionary.json&#x000A;</code></pre>
   
@@ -271,7 +270,7 @@
   
   <h2>Working with the Sandbox</h2>
   
-  <p>By default, an flatpak has extremely limited access to the host environment. This includes:</p>
+  <p>By default, a flatpak has extremely limited access to the host environment. This includes:</p>
   
   <ul>
   <li>No access to any host files except the runtime, the app and <code>~/.var/app/$APPID</code>. Only the last of these is writable.</li>
@@ -382,7 +381,7 @@
   
   <h3>Hosting a repository</h3>
   
-  <p>While it is relatively simple to host an flatpak repository, there are some important details to be aware of.</p>
+  <p>While it is relatively simple to host a flatpak repository, there are some important details to be aware of.</p>
   
   <p>archive-z2 repositories contain a single file for each file in the application. This means that pull operations will do a lot of HTTP requests. Since new requests are slow, it is important to enable HTTP keep-alive on the web server.</p>
   
