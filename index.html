@@ -150,15 +150,16 @@
             Before you can install applications with Flatpak, you need to install
             Flatpak itself. Currently this has to be done using the command line.
             This section contains instructions for installing Flatpak on Fedora or Ubuntu.
-            Details on how to install flatpak on other distros are available on the
-            <a href='getting.html'>getting flatpak page</a>.
+            Details on how to install Flatpak on other distros are available on the
+            <a href='getting.html'>getting Flatpak</a>
+            page.
           </p>
           <p>
             With Fedora, run:
           </p>
           <pre>$ sudo dnf install flatpak</pre>
           <p>
-            On Ubuntu, flatpak is available through a PPA. To install it, run:
+            On Ubuntu, Flatpak is available through a PPA. To install it, run:
           </p>
           <pre>$ sudo add-apt-repository ppa:alexlarsson/flatpak&#x000A;$ sudo apt-get update&#x000A;$ sudo apt-get install flatpak</pre>
           <h3>2. Add repositories</h3>
@@ -186,7 +187,7 @@
           </p>
           <pre>$ flatpak --user install gnome-apps org.gnome.gedit stable</pre>
           <p>
-            Installed applications should appear in the usual place. You can also run them from the command line:
+            Installed applications should appear in the usual place in your desktop. You can also run them from the command line:
           </p>
           <pre>$ flatpak run org.gnome.gedit stable&#x000A;</pre>
         </div>
@@ -210,21 +211,22 @@
           </p>
           <h3>1. Install Flatpak</h3>
           <p>
-            First we need to install Flatpak itself. The instructions here are for Fedora or Ubuntu
+            First we need to install Flatpak itself. The instructions here are for Fedora or Ubuntu.
             Details for other distros can be found on the
-            <a href='getting.html'>getting flatpak page</a>.
+            <a href='getting.html'>getting Flatpak</a>
+            page.
             If you are using Fedora, run:
           </p>
           <pre>$ sudo dnf install flatpak</pre>
           <p>
-            On Ubuntu, flatpak is available through a PPA. To install it, run:
+            On Ubuntu, Flatpak is available through a PPA. To install it, run:
           </p>
           <pre>$ sudo add-apt-repository ppa:alexlarsson/flatpak&#x000A;$ sudo apt-get update&#x000A;$ sudo apt-get install flatpak</pre>
           <h3>2. Install a runtime</h3>
           <p>
             Flatpak requires every app to specify a runtime that it uses for its dependencies.
             We'll use the GNOME 3.20 development platform runtime for this. To install the runtime,
-            we first need to add the repository that provides it. To do this, run:
+            we first need to add the repository that provides it. Run:
           </p>
           <pre>$ wget https://sdk.gnome.org/keys/gnome-sdk.gpg&#x000A;$ flatpak remote-add --user --gpg-import=gnome-sdk.gpg gnome https://sdk.gnome.org/repo/</pre>
           <p>And then install the runtime itself:</p>
@@ -280,7 +282,7 @@
           </p>
           <p>
             Ta da! That's it: you've successfully built, installed and run your first Flatpak. Many
-            of these steps are simplified by flatpak's built in tools. For information on how to use
+            of these steps are simplified by Flatpak's built in tools. For information on how to use
             them, as well as how to build and distribute more complex apps
             <a href="developer.html">see the developers page.</a>
           </p>
@@ -314,7 +316,7 @@
       <div class='row'>
         <div class='col-lg-3 col-lg-offset-1'>
           <a class='navbar-brand page-scroll' href='#page-top'>
-            <img title="Flatpack" class="full" src="img/logo.svg" />
+            <img title="Flatpak" class="full" src="img/logo.svg" />
           </a>
         </div>
         <ul class='col-lg-7'>

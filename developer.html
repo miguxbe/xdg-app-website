@@ -51,11 +51,11 @@
     </nav>
   </body>
   <section class="bg-dark"><div class="container"><div class="row"><div class="col-lg-10 col-lg-offset-1">
-  <h1>Getting Started with flatpak</h1>
+  <h1>Getting Started with Flatpak</h1>
   
-  <p>This guide contains everything you need to know to build and distribute applications using flatpak. It includes an introduction to the basic concepts and a simple app building tutorial, before moving on to cover automated building and repository hosting.</p>
+  <p>This guide contains everything you need to know to build and distribute applications using Flatpak. It includes an introduction to the basic concepts and a simple app building tutorial, before moving on to cover automated building and repository hosting.</p>
   
-  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have flatpak and flat-pak-builder installed on your system. See <a href="getting.html">getting flatpak</a> for more details on this.</p>
+  <p>Example tutorials are used throughout this guide. To complete them, it is necessary to have flatpak and flatpak-builder installed on your system. See <a href="getting.html">getting Flatpak</a> for more details on this.</p>
   
   <h3>Table of Contents</h3>
   
@@ -63,7 +63,7 @@
   
   <h2>Key Concepts</h2>
   
-  <p>Flatpak is best understood through its key concepts: runtimes, bundles, SDKs and sandboxes. These help to explain how flatpak differs from traditional application distribution on Linux, as well as the framework&#39;s capabilities.</p>
+  <p>Flatpak is best understood through its key concepts: runtimes, bundles, SDKs and sandboxes. These help to explain how Flatpak differs from traditional application distribution on Linux, as well as the framework&#39;s capabilities.</p>
   
   <h3>Runtimes</h3>
   
@@ -85,7 +85,7 @@
   
   <h3>Sandboxes</h3>
   
-  <p>With flatpak, each app is built and run in an isolated environment. By default, the application can only &#39;see&#39; itself and its runtime. Access to user files, network, graphics sockets, subsystems on the bus and devices all has to be explicitly granted. (As will be described later, flatpak provides several ways to do this.) Access to other things, such as other processes, is (deliberately) not possible.</p>
+  <p>With Flatpak, each app is built and run in an isolated environment. By default, the application can only &#39;see&#39; itself and its runtime. Access to user files, network, graphics sockets, subsystems on the bus and devices all has to be explicitly granted. (As will be described later, Flatpak provides several ways to do this.) Access to other things, such as other processes, is (deliberately) not possible.</p>
   
   <h2>The flatpak Command</h2>
   
@@ -93,7 +93,7 @@
   
   <h2>Anatomy of a Flatpak App</h2>
   
-  <p>Each flatpak app has the following basic structure:</p>
+  <p>Each Flatpak app has the following basic structure:</p>
   
   <pre><code>metadata    # A keyfile which provides information about the application,&#x000A;            # including information that is necessary for setting up the sandbox&#x000A;            # for running the application&#x000A;/files      # The files that make up the application&#x000A;/files/bin  # Application binaries&#x000A;/export     # Files which the host environment needs access to, such as the&#x000A;            # application&#39;s desktop file, icon and D-Bus service file&#x000A;</code></pre>
   
@@ -111,7 +111,7 @@
   
   <h2>Building Simple Apps</h2>
   
-  <p><code>flatpak</code> provides a simple set of tools for building and distributing applications. These allow creating new flatpaks, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
+  <p>The <code>flatpak</code> utility provides a simple set of commands for building and distributing applications. These allow creating new Flatpaks, into which new or existing applications can be built. This section describes how to build a simple application which doesn&#39;t require any additional dependencies outside of the runtime it is built against.</p>
   
   <h3>Installing an SDK</h3>
   
@@ -185,13 +185,13 @@
   
   <h2>Building More Complex Apps With flatpak-builder</h2>
   
-  <p>If an application requires additional dependencies that aren&#39;t provided by its runtime, flatpak allows them to be bundled as modules as part of the app itself. This requires building each module inside the application, which can be a lot of work. For this reason, the flatpak-builder tool is provided to automate the build process.</p>
+  <p>If an application requires additional dependencies that aren&#39;t provided by its runtime, Flatpak allows them to be bundled as modules as part of the app itself. This requires building each module inside the application, which can be a lot of work. The <code>flatpak-builder</code> tool can automate this multi-step build process.</p>
   
   <p>flatpak-builder takes care of the routine commands used to build an app and any bundled modules, thus allowing application building to be automated. To do this, it expects modules to be built in a standard manner by following what is called the <a href="https://github.com/cgwalters/build-api">Build API</a>. If any modules don&#39;t conform to this API, they will need to be modified.</p>
   
   <h3>Manifests</h3>
   
-  <p>flatpak-builder uses a json file to describe the parameters for building an app, as well as each of the modules to be bundled. This file is called the manifest. Module sources can be of several types, including archives (<code>.tar</code>, <code>.zip</code>), Git, Bzr, patch files or shell commands that are run.</p>
+  <p>The input to flatpak-builder is a json file that describes the parameters for building an app, as well as each of the modules to be bundled. This file is called the manifest. Module sources can be of several types, including .tar or .zip archives, Git or Bzr repositories, patch files or shell commands that are run.</p>
   
   <p>The GNOME Dictionary manifest is short, because the only module is the application itself:</p>
   
@@ -378,7 +378,7 @@
       <div class='row'>
         <div class='col-lg-3 col-lg-offset-1'>
           <a class='navbar-brand page-scroll' href='#page-top'>
-            <img title="Flatpack" class="full" src="img/logo.svg" />
+            <img title="Flatpak" class="full" src="img/logo.svg" />
           </a>
         </div>
         <ul class='col-lg-7'>
