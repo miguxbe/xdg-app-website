@@ -6204,7 +6204,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Overpass','Source Sans Pro', 'Source Sans', sans-serif;
+  font-family: "Overpass", "Source Sans Pro", "Source Sans", sans-serif;
   margin-top: 1.5em; }
   h1:first-child,
   h2:first-child,
@@ -6249,6 +6249,10 @@ p {
 .bg-dark {
   color: #000;
   background-color: #eaeaea; }
+
+.bg-black {
+  color: #fff;
+  background-color: #000; }
 
 .text-faded {
   color: rgba(255, 255, 255, 0.7); }
@@ -6591,3 +6595,32 @@ table {
     table.full th {
       background-color: #4a90d9;
       color: #fff; }
+
+#footer {
+  font-size: 90%; }
+  #footer a {
+    font-weight: bold;
+    color: #919191; }
+    #footer a:hover {
+      color: #c4c4c4; }
+    #footer a:active, #footer a:focus {
+      color: #fff; }
+  #footer .navbar-brand {
+    padding-top: 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Overpass", "Source Sans Pro", "Source Sans", sans-serif;
+    font-weight: bold; }
+  #footer li {
+    list-style: none;
+    display: block;
+    font-size: 80%; }
+    #footer li.toplevel {
+      text-transform: uppercase;
+      margin-bottom: 1em; }
+    #footer li ul {
+      margin: 0;
+      padding: 0; }
+      #footer li ul li {
+        text-transform: none;
+        padding-left: 1em; }
